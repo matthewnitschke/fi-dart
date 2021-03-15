@@ -1,0 +1,10 @@
+.bucket-container {
+    &:not(:last-child) .amount-indicator {
+        margin-bottom: 1rem;
+    }
+
+    .bucket-container__content-line {
+        display: flex;
+        align-items: center;
+    }
+}

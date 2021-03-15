@@ -1,3 +1,9 @@
 analyser:
   strong-mode:
     implicit-casts: false
+
+  plugins:
+    - over_react
+
+  errors:
+    uri_has_not_been_generated: ignore

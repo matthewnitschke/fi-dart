@@ -13,7 +13,3 @@ targets:
         generate_for:
           include:
             - "lib/**.sg.dart"
-      # sass_builder:
-      #   generate_for:
-      #     include:
-      #       - "lib/**.scss"

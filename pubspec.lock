@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  bootstrap_sass:
+    dependency: "direct main"
+    description:
+      name: bootstrap_sass
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.5.0"
   build:
     dependency: transitive
     description:
@@ -268,7 +275,7 @@ packages:
     source: hosted
     version: "3.1.4"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -357,7 +364,7 @@ packages:
       name: over_react
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.12.1"
+    version: "4.1.0"
   package_config:
     dependency: transitive
     description:
@@ -429,12 +436,12 @@ packages:
     source: hosted
     version: "2.1.5"
   react:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: react
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.7.1"
+    version: "6.0.1"
   redux:
     dependency: "direct main"
     description:
@@ -443,7 +450,7 @@ packages:
     source: hosted
     version: "3.0.0"
   redux_dev_tools:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: redux_dev_tools
       url: "https://pub.dartlang.org"
@@ -610,6 +617,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  uuid:
+    dependency: "direct main"
+    description:
+      name: uuid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   vm_service:
     dependency: transitive
     description:
