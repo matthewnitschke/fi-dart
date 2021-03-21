@@ -6,8 +6,12 @@ mixin CardProps on UiProps {}
 
 UiFactory<CardProps> Card = uiFunction(
   (props) {
+    final classNameBuilder = ClassNameBuilder()
+      ..add('card')
+      ..addFromProps(props);
+
     return (Dom.div()
-      ..className = 'card'
+      ..className = classNameBuilder.toClassName()
     )(
       props.children
     );

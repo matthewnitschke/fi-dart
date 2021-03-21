@@ -36,6 +36,7 @@ UiFactory<AppProps> App = uiFunction(
 
           return (Card()
             ..key = itemId
+            ..className = 'item-layout__card'
           )(
             rootItemBucketGroupIds.contains(itemId) ? 
               (BucketGroupContainer()

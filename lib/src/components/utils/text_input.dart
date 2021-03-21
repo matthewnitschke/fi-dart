@@ -6,10 +6,13 @@ class TextInputProps = UiProps with DomPropsMixin;
 
 UiFactory<TextInputProps> TextInput = uiFunction(
   (props) {
+    final classNameBuilder = ClassNameBuilder.fromProps(props)
+      ..add('text-input');
+
     return (Dom.input()
       ..addProps(props)
       ..onFocus = ((e) => e.target.select())
-      ..className = 'text-input ${props.className}'
+      ..className = classNameBuilder.toClassName()
     )();
   },
   _$TextInputConfig, // ignore: undefined_identifier

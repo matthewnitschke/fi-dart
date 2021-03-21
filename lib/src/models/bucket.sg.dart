@@ -7,7 +7,7 @@ part 'bucket.sg.g.dart';
 
 abstract class Bucket extends Object implements Item, Built<Bucket, BucketBuilder> {
 
-  BucketValue get value;  
+  BucketValue get value;
 
   Bucket._();
   factory Bucket([void Function(BucketBuilder) updates]) = _$Bucket;

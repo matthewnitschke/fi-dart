@@ -7,6 +7,7 @@ mixin DragHandleProps on UiProps {}
 UiFactory<DragHandleProps> DragHandle = uiFunction(
   (props) {
     return (Dom.svg()
+      ..className = 'drag-handle'
       ..viewBox = '0 0 8 15'
       ..width = '8'
       ..height = '15'

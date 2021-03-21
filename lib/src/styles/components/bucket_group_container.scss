@@ -1,8 +1,16 @@
 .bucket-group-container {
+    & > .item-layout__header > .item-layout__label-input {
+        font-weight: 900;
+    }
+
     .group-label-input {
         font-weight: 900;
         color: #69757a;
         margin: 0.2rem 0;
         margin-bottom: 0.5rem;
+    }
+
+    .item-layout__content .item-layout {
+        margin: .5rem 0;
     }
 }

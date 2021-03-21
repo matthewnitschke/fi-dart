@@ -1,4 +1,5 @@
 import 'package:fi/src/components/bucket_container.dart';
+import 'package:fi/src/components/item_layout.dart';
 import 'package:fi/src/components/utils/button.dart';
 import 'package:fi/src/components/utils/text_input.dart';
 import 'package:fi/src/models/bucket_group.sg.dart';
@@ -28,18 +29,11 @@ UiFactory<BucketGroupContainerProps> BucketGroupContainer = uiFunction(
       },
     );
 
-    return (Dom.div()
+    return (ItemLayout()
       ..className = 'bucket-group-container'
+      ..label = bucketGroup.label
+      ..onLabelChange = ((newLabel) => dispatch(SetItemLabelAction(props.itemId, newLabel)))
     )(
-      Dom.div()(
-        (TextInput()
-          ..value = bucketGroup.label
-          ..className = 'group-label-input'
-          ..placeholder = 'Group Label'
-          ..onChange = ((e) => dispatch(SetItemLabelAction(props.itemId, e.target.value as String)))
-        )()
-      ),
-
       bucketGroup.itemIds.map((childItemId) {
         return (BucketContainer()
           ..key = childItemId

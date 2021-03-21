@@ -1,8 +1,8 @@
 import 'package:fi/src/components/amount_indicator.dart';
-import 'package:fi/src/components/utils/drag_handle.dart';
-import 'package:fi/src/components/utils/text_input.dart';
+import 'package:fi/src/components/item_layout.dart';
 import 'package:fi/src/models/bucket.sg.dart';
 import 'package:fi/src/redux/items/items.actions.dart';
+import 'package:fi/src/redux/selectors.dart';
 import 'package:fi/src/utils.dart';
 import 'package:over_react/over_react.dart';
 import 'package:over_react/over_react_redux.dart';
@@ -29,20 +29,14 @@ UiFactory<BucketContainerProps> BucketContainer = uiFunction(
       },
     );
 
-    return (Dom.div()
-      ..className = 'bucket-container'
-    )(
-      (Dom.div()
-        ..className = 'bucket-container__content-line'
-      )(
-        DragHandle()(),
-        (TextInput()
-          ..value = bucket.label
-          ..placeholder = 'Label'
-          ..onChange = ((e) => dispatch(SetItemLabelAction(props.itemId, e.target.value as String)))
-        )()
-      ),
+    final bucketAmount = useEqualitySelector((state) => bucketAmountSelector(state, props.itemId));
 
+    return (ItemLayout()
+      ..className = 'bucket-container'
+      ..label = bucket.label
+      ..onLabelChange = ((newLabel) => dispatch(SetItemLabelAction(props.itemId, newLabel)))
+      ..headerContent = (() => Dom.div()('\$$bucketAmount'))
+    )(
       (AmountIndicator()
         ..value = 50
         ..max = 100

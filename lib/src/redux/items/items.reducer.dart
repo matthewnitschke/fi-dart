@@ -21,7 +21,9 @@ class ItemsReducer {
 
     stateBuilder[action.itemId] = Bucket((b) => b
       ..label = action.label
-      ..value = StaticBucketValue()
+      ..value = StaticBucketValue((bv) => bv
+        ..amount = 0
+      )
     );
 
     if (action.parentId != null) {

@@ -1,0 +1,58 @@
+
+.item-layout__card {
+    padding: 1rem 1.7rem;
+}
+
+.item-layout {
+
+    position: relative;
+
+    .item-layout__header {
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            .details-handle, .drag-handle {
+                opacity: 1;
+            }
+        }
+    }
+
+    .drag-handle {
+        $left: 15px;
+        left: -$left;
+        padding-right: $left;
+
+        position: absolute;
+        opacity: 0;
+        cursor: move;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .item-layout__label-input {
+        width: 100%;
+    }
+
+    .details-handle {
+        $right: 18px;
+        right: -$right;
+        padding-left: $right;
+        color: var(--blue);
+        position: absolute;
+        font-size: 0.8rem;
+        opacity: 0.3;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1;
+            color: var(--blue-dark);
+        }
+    }
+
+    .item-layout__content {
+        grid-column-start: 2;
+    }
+}

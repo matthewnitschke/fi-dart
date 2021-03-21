@@ -1,6 +1,5 @@
 import 'package:fi/src/models/app_state.sg.dart';
 import 'package:fi/src/redux/items/items.actions.dart';
-import 'package:fi/src/redux/root/root.actions.dart';
 import 'package:redux/redux.dart';
 
 class RootReducer {
@@ -16,10 +15,14 @@ class RootReducer {
       ..rootItemIds.add(action.itemId)
     );
   }
-  
+
   AppState _onAddBucket(AppState state, AddBucketAction action) {
-    return state.rebuild((b) => b
-      ..rootItemIds.add(action.itemId)
-    );
+    if (action.parentId == null) {
+      return state.rebuild((b) => b
+        ..rootItemIds.add(action.itemId)
+      );
+    }
+
+    return state;
   }
 }

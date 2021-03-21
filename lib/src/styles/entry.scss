@@ -32,8 +32,8 @@ body {
 
   column-gap: 10px;
 
-  margin: 0 .5rem;
-  margin-top: 1rem;
+  padding: 0 .5rem;
+  padding-top: 1rem;
 }
 
 .rhp {
@@ -51,3 +51,4 @@ body {
 @import './components/amount_indicator.scss';
 @import './components/card.scss';
 @import './components/bucket_container.scss';
+@import './components/item_layout.scss';
