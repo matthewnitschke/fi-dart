@@ -1,5 +1,11 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:fi/src/components/app.dart';
+import 'package:fi/src/models/bucket.sg.dart';
+import 'package:fi/src/models/bucket_value.sg.dart';
+import 'package:fi/src/models/item.sg.dart';
+import 'package:fi/src/redux/items/items.actions.dart';
 import 'package:fi/src/redux/items/items.reducer.dart';
+import 'package:fi/src/redux/root/root.actions.dart';
 import 'package:fi/src/redux/root/root.reducer.dart';
 import 'package:over_react/over_react_redux.dart';
 import 'package:redux/redux.dart';
@@ -27,6 +33,9 @@ class FiModule {
       ),
       middleware: [],
     );
+
+    // _store.dispatch(AddBucketAction(label: 'Something', itemId: 'a'));
+    // _store.dispatch(SelectItemAction('a'));
 
   }
 

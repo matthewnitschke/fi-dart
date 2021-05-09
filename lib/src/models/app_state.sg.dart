@@ -7,6 +7,9 @@ part 'app_state.sg.g.dart';
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   DateTime get selectedMonth;
 
+  @nullable
+  String get selectedItemId;
+
   BuiltMap<String, Item> get items;
   
   BuiltList<String> get rootItemIds;

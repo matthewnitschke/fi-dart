@@ -1,3 +1,4 @@
+import 'package:fi/src/models/bucket_value.sg.dart';
 import 'package:fi/src/utils.dart';
 
 class AddBucketGroupAction {
@@ -29,4 +30,11 @@ class SetItemLabelAction {
   final String label;
 
   SetItemLabelAction(this.itemId, this.label);
+}
+
+class SetBucketValueAction {
+  final String itemId;
+  final BucketValue value;
+
+  SetBucketValueAction(this.itemId, this.value);
 }

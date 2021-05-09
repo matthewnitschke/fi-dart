@@ -15,7 +15,7 @@
 
 html,
 body,
-#root {
+#app {
   margin: 0;
   height: 100%;
 }
@@ -27,7 +27,7 @@ body {
 
 .main-content {
   display: grid;
-  grid-template-columns: auto 35% auto;
+  grid-template-columns: minmax(auto, 32.5%) minmax(auto, 35%) minmax(auto, 32.5%);
   grid-template-rows: auto;
 
   column-gap: 10px;
@@ -52,3 +52,5 @@ body {
 @import './components/card.scss';
 @import './components/bucket_container.scss';
 @import './components/item_layout.scss';
+@import './components/panel.scss';
+@import './components/bucket_value_editor.scss';

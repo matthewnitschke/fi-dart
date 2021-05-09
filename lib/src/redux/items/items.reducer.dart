@@ -14,6 +14,7 @@ class ItemsReducer {
     TypedReducer<BuiltMap<String, Item>, AddBucketAction>(_onAddBucket),
     TypedReducer<BuiltMap<String, Item>, AddBucketGroupAction>(_onAddBucketGroup),
     TypedReducer<BuiltMap<String, Item>, SetItemLabelAction>(_onSetItemLabel),
+    TypedReducer<BuiltMap<String, Item>, SetBucketValueAction>(_onSetBucketValue),
   ]);
 
   BuiltMap<String, Item> _onAddBucket(BuiltMap<String, Item> state, AddBucketAction action) {
@@ -53,6 +54,15 @@ class ItemsReducer {
       ..[action.itemId] = b[action.itemId].rebuild((ib) => ib
         ..label = action.label
       )
+    );
+  }
+
+  BuiltMap<String, Item> _onSetBucketValue(BuiltMap<String, Item> state, SetBucketValueAction action) {
+    return state.rebuild((b) => b
+      ..[action.itemId] = b[action.itemId].rebuild((ib) {
+        final bb = ib as BucketBuilder;
+        return bb..value = action.value;
+      })
     );
   }
 }

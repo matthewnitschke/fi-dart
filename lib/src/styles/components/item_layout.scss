@@ -43,10 +43,11 @@
         color: var(--blue);
         position: absolute;
         font-size: 0.8rem;
-        opacity: 0.3;
+        opacity: 0;
         cursor: pointer;
 
-        &:hover {
+
+        &:hover, &.details-handle__selected {
             opacity: 1;
             color: var(--blue-dark);
         }

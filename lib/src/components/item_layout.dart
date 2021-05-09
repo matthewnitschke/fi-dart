@@ -1,4 +1,3 @@
-import 'package:fi/src/components/details_handle.dart';
 import 'package:fi/src/components/utils/drag_handle.dart';
 import 'package:fi/src/components/utils/text_input.dart';
 import 'package:over_react/over_react.dart';
@@ -8,6 +7,7 @@ part 'item_layout.over_react.g.dart';
 mixin ItemLayoutProps on UiProps {
   String label;
   ReactElement Function() headerContent;
+  ReactElement Function() rightContent;
 
   void Function(String label) onLabelChange;
 }
@@ -34,7 +34,7 @@ UiFactory<ItemLayoutProps> ItemLayout = uiFunction(
 
         props.headerContent?.call(),
 
-        DetailsHandle()()
+        props.rightContent?.call(),
       ),
 
       (Dom.div()

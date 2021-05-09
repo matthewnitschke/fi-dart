@@ -1,0 +1,23 @@
+.bucket-value-editor {
+
+    .bucket-value-editor__type-editor {
+        display: flex;
+        margin-bottom: 1rem;
+    
+        & > * {
+            margin: 0.5rem;
+            border-radius: 3px;
+            background-color: lightgrey;
+            flex-grow: 1;
+            padding: .5rem;
+            text-align: center;
+            cursor: pointer;
+    
+            &.selected {
+                background-color: var(--green);
+            }
+        }
+    }
+
+
+}
