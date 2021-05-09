@@ -27,7 +27,7 @@ body {
 
 .main-content {
   display: grid;
-  grid-template-columns: minmax(auto, 32.5%) minmax(auto, 35%) minmax(auto, 32.5%);
+  grid-template-columns: minmax(auto, 12.5%) minmax(auto, 20%) minmax(auto, 35%) minmax(auto, 32.5%);
   grid-template-rows: auto;
 
   column-gap: 10px;
@@ -54,3 +54,4 @@ body {
 @import './components/item_layout.scss';
 @import './components/panel.scss';
 @import './components/bucket_value_editor.scss';
+@import './components/transaction_pill.scss';

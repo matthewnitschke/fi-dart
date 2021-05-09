@@ -3,6 +3,7 @@ import 'package:fi/src/components/details_panel/bucket_details_panel.dart';
 import 'package:fi/src/components/bucket_group_container.dart';
 import 'package:fi/src/components/month_selector.dart';
 import 'package:fi/src/components/root_new_button.dart';
+import 'package:fi/src/components/transactions_panel/transactions_panel.dart';
 import 'package:fi/src/components/utils/card.dart';
 import 'package:fi/src/models/bucket_group.sg.dart';
 import 'package:fi/src/utils.dart';
@@ -34,6 +35,9 @@ UiFactory<AppProps> App = uiFunction(
       ..className = 'main-content'
     )(
       Dom.div()(),
+      Dom.div()(
+        TransactionsPanel()()
+      ),
       Dom.div()(
         MonthSelector()(),
         rootItemIds.map((itemId) {

@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:fi/src/models/app_state.sg.dart';
 import 'package:over_react/over_react_redux.dart';
 import 'package:uuid/uuid.dart';
@@ -17,3 +18,20 @@ TValue useEqualitySelector<TValue>(TValue Function(AppState) selector) {
     }
   );
 }
+
+extension BuiltMapExtendsions<K, V> on BuiltMap<K, V> {
+  Iterable<R> mapKV<R>(Function(K, V) runner) {
+    return this.keys.map((key) {
+      return runner(key, this[key]);
+    });
+  }
+}
+
+extension MapExtendsions<K, V> on Map<K, V> {
+  Iterable<R> mapKV<R>(Function(K, V) runner) {
+    return this.keys.map((key) {
+      return runner(key, this[key]);
+    });
+  }
+}
+

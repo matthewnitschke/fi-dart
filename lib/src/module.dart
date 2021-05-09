@@ -11,6 +11,7 @@ import 'package:over_react/over_react_redux.dart';
 import 'package:redux/redux.dart';
 
 import 'models/app_state.sg.dart';
+import 'models/transaction.sg.dart';
 
 class FiModule {
 
@@ -30,6 +31,23 @@ class FiModule {
       },
       initialState: AppState((b) => b
         ..selectedMonth = DateTime.now()
+        ..transactions = MapBuilder<String, Transaction>({
+          'a': Transaction((tb) => tb
+            ..date = DateTime.now()
+            ..merchant = 'Fellow'
+            ..amount = -299
+          ),
+          'b': Transaction((tb) => tb
+            ..date = DateTime.now().subtract(Duration(days: 2))
+            ..merchant = 'Apple'
+            ..amount = -100
+          ),
+          'c': Transaction((tb) => tb
+            ..date = DateTime.now().subtract(Duration(days: 2))
+            ..merchant = 'Faith'
+            ..amount = 100
+          )
+        })
       ),
       middleware: [],
     );

@@ -1,0 +1,28 @@
+.transaction-pill {
+    display: flex;
+    align-items: center;
+    padding: .5rem;
+    border-radius: 3px;
+    margin-bottom: .5rem;
+    cursor: pointer;
+
+    &.transaction-pill__income {
+        background-color: var(--green);
+        color: #000;
+    }
+
+    &.transaction-pill__expence {
+        background-color: var(--red);
+        color: #FFF;
+    }
+
+    .transaction-pill__amount {
+        font-size: 1.05rem;
+        margin-right: .5rem;
+    }
+
+    .transaction-pill__merchant {
+        font-size: 0.75rem;
+        font-style: italic;
+    }
+}

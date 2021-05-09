@@ -19,9 +19,10 @@ UiFactory<BucketDetailsPanelProps> BucketDetailsPanel = uiFunction(
     final item = useEqualitySelector(
       (state) => state.items[props.itemId] as Bucket
     );
-    
+
+    final header = item.label?.isEmpty == true ? 'Label' : item.label;
     return (Panel()
-      ..header = item.label
+      ..header = header
     )(
       (BucketValueEditor()
         ..value = item.value

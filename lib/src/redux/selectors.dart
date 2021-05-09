@@ -38,3 +38,9 @@ int bucketAmountSelector(AppState state, String bucketId) {
     throw Exception('Unknown bucket value type ${bucketValue.runtimeType}');
   }
 }
+
+List<Bucket> bucketTypeSelector<T extends BucketValue>(AppState state) {
+  return state.items.values.where((item) {
+    return item is Bucket && item.value is T;
+  }).toList();
+} 
