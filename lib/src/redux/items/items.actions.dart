@@ -25,6 +25,12 @@ class AddBucketAction {
     this.itemId = itemId ?? newUuid();
 }
 
+class DeleteItemAction {
+  final String itemId;
+
+  DeleteItemAction(this.itemId);
+}
+
 class SetItemLabelAction {
   final String itemId;
   final String label;
@@ -37,4 +43,16 @@ class SetBucketValueAction {
   final BucketValue value;
 
   SetBucketValueAction(this.itemId, this.value);
+}
+
+class AllocateTransactionAction {
+  final String itemId;
+  final String transactionId;
+
+  AllocateTransactionAction(this.itemId, this.transactionId);
+}
+
+class UnallocateTransactionAction {
+  final String transactionId;
+  UnallocateTransactionAction(this.transactionId);
 }

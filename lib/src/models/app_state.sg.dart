@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:fi/src/models/item.sg.dart';
 import 'package:fi/src/models/transaction.sg.dart';
 
@@ -16,6 +17,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   BuiltList<String> get rootItemIds;
 
   BuiltMap<String, Transaction> get transactions;
+
+  static Serializer<AppState> get serializer => _$appStateSerializer;
 
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;

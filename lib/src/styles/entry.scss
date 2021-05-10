@@ -27,27 +27,42 @@ body {
 
 .main-content {
   display: grid;
+  grid-template-rows: 3rem auto;
   grid-template-columns: minmax(auto, 12.5%) minmax(auto, 20%) minmax(auto, 35%) minmax(auto, 32.5%);
-  grid-template-rows: auto;
+
+  grid-template-areas:
+    ". . header ."
+    ". lhp body rhp";
 
   column-gap: 10px;
 
   padding: 0 .5rem;
   padding-top: 1rem;
-}
 
-.rhp {
-  grid-column-start: 3;
+  & > .header {
+    grid-area: header;
+  }
 
-  display: flex;
-  flex-direction: column;
-}
+  & > .body {
+    grid-area: body;
+  }
+
+  & > .rhp {
+    grid-area: rhp;
   
+    display: flex;
+    flex-direction: column;
+  }
+  
+  & > .lhp {
+    grid-area: "lhp";
+  }
+}
+
 @import './components/bucket_group_container.scss';
 @import './components/button.scss';
 @import './components/root_new_button.scss';
 @import './components/month_selector.scss';
-@import './components/text_input.scss';
 @import './components/amount_indicator.scss';
 @import './components/card.scss';
 @import './components/bucket_container.scss';
@@ -55,3 +70,5 @@ body {
 @import './components/panel.scss';
 @import './components/bucket_value_editor.scss';
 @import './components/transaction_pill.scss';
+@import './components/tabs.scss';
+@import './components/inputs.scss';

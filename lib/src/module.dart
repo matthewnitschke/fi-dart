@@ -1,12 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:fi/src/components/app.dart';
-import 'package:fi/src/models/bucket.sg.dart';
-import 'package:fi/src/models/bucket_value.sg.dart';
-import 'package:fi/src/models/item.sg.dart';
-import 'package:fi/src/redux/items/items.actions.dart';
 import 'package:fi/src/redux/items/items.reducer.dart';
-import 'package:fi/src/redux/root/root.actions.dart';
 import 'package:fi/src/redux/root/root.reducer.dart';
+import 'package:fi/src/redux/settings_save.dart';
 import 'package:over_react/over_react_redux.dart';
 import 'package:redux/redux.dart';
 
@@ -30,27 +26,31 @@ class FiModule {
         );
       },
       initialState: AppState((b) => b
-        ..selectedMonth = DateTime.now()
+        ..selectedMonth = DateTime.now().toUtc()
         ..transactions = MapBuilder<String, Transaction>({
           'a': Transaction((tb) => tb
-            ..date = DateTime.now()
+            ..date = DateTime.now().toUtc()
             ..merchant = 'Fellow'
             ..amount = -299
           ),
           'b': Transaction((tb) => tb
-            ..date = DateTime.now().subtract(Duration(days: 2))
+            ..date = DateTime.now().subtract(Duration(days: 2)).toUtc()
             ..merchant = 'Apple'
             ..amount = -100
           ),
           'c': Transaction((tb) => tb
-            ..date = DateTime.now().subtract(Duration(days: 2))
+            ..date = DateTime.now().subtract(Duration(days: 2)).toUtc()
             ..merchant = 'Faith'
             ..amount = 100
           )
         })
       ),
-      middleware: [],
+      middleware: [
+        settingsSaveMiddleware,
+      ],
     );
+
+    loadFromLocalStorage(_store);
 
     // _store.dispatch(AddBucketAction(label: 'Something', itemId: 'a'));
     // _store.dispatch(SelectItemAction('a'));

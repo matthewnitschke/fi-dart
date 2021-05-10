@@ -4,14 +4,15 @@ part 'card.over_react.g.dart';
 
 mixin CardProps on UiProps {}
 
-UiFactory<CardProps> Card = uiFunction(
-  (props) {
+UiFactory<CardProps> Card = uiForwardRef(
+  (props, ref) {
     final classNameBuilder = ClassNameBuilder()
       ..add('card')
       ..addFromProps(props);
 
     return (Dom.div()
       ..className = classNameBuilder.toClassName()
+      ..ref = ref
     )(
       props.children
     );

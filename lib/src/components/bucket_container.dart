@@ -1,6 +1,7 @@
-import 'package:fi/src/components/amount_indicator.dart';
+import 'package:fi/src/components/bucket_amount_indicator.dart';
 import 'package:fi/src/components/details_handle.dart';
 import 'package:fi/src/components/item_layout.dart';
+import 'package:fi/src/hooks/dnd-hooks.dart';
 import 'package:fi/src/models/bucket.sg.dart';
 import 'package:fi/src/redux/items/items.actions.dart';
 import 'package:fi/src/redux/root/root.actions.dart';
@@ -19,6 +20,14 @@ UiFactory<BucketContainerProps> BucketContainer = uiFunction(
   (props) {
     final dispatch = useDispatch();
 
+    final ref = useDropzone(
+      acceptor: TransactionAcceptor(),
+      onDrop: (dropEvent) {
+        final transactionId = dropEvent.draggableElement.id;
+        dispatch(AllocateTransactionAction(props.itemId, transactionId));
+      },
+    );
+
     final selectedItemId = useAppSelector((store) => store.selectedItemId);
     
     final bucket = useEqualitySelector(
@@ -36,6 +45,7 @@ UiFactory<BucketContainerProps> BucketContainer = uiFunction(
     final bucketAmount = useEqualitySelector((state) => bucketAmountSelector(state, props.itemId));
 
     return (ItemLayout()
+      ..ref = ref
       ..className = 'bucket-container'
       ..label = bucket.label
       ..onLabelChange = ((newLabel) => dispatch(SetItemLabelAction(props.itemId, newLabel)))
@@ -45,9 +55,8 @@ UiFactory<BucketContainerProps> BucketContainer = uiFunction(
         ..isSelected = selectedItemId == props.itemId
       )())
     )(
-      (AmountIndicator()
-        ..value = 50
-        ..max = bucketAmount.toDouble()
+      (BucketAmountIndicator()
+        ..itemId = props.itemId
       )()
     );
   },

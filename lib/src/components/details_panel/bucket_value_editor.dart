@@ -1,3 +1,4 @@
+import 'package:fi/src/components/utils/select.dart';
 import 'package:fi/src/models/bucket.sg.dart';
 import 'package:fi/src/models/bucket_value.sg.dart';
 import 'package:fi/src/utils.dart';
@@ -16,26 +17,27 @@ UiFactory<BucketValueEditorProps> BucketValueEditor = uiFunction(
     return (Dom.div()
       ..className = 'bucket-value-editor'
     )(
-      (Dom.div()
-        ..className = 'bucket-value-editor__type-editor'
-      )(
-        (Dom.div()
-          ..className = props.value is IncomeBucketValue ? 'selected' : ''
-          ..onClick = ((_) => props.onValueChange(IncomeBucketValue()))
-        )('Income'),
-        (Dom.div()
-          ..className = props.value is StaticBucketValue ? 'selected' : ''
-          ..onClick = ((_) => props.onValueChange(StaticBucketValue()))
-        )('Static'),
-        (Dom.div()
-          ..className = props.value is TableBucketValue ? 'selected' : ''
-          ..onClick = ((_) => props.onValueChange(TableBucketValue()))
-        )('Table'),
-        (Dom.div()
-          ..className = props.value is ExtraBucketValue ? 'selected' : ''
-          ..onClick = ((_) => props.onValueChange(ExtraBucketValue()))
-        )('Extra'),
-      ),
+      (Select()
+        ..onOptionSelect = ((value) {
+            if (value == 'income') {
+              props.onValueChange(IncomeBucketValue());
+            } else if (value == 'static') {
+              props.onValueChange(StaticBucketValue());
+            } else if (value == 'table') {
+              props.onValueChange(TableBucketValue());
+            } else if (value == 'extra') {
+              props.onValueChange(ExtraBucketValue());
+            }
+          })
+          ..options = {
+            'income': 'Income',
+            'static': 'Static',
+            'table': 'Table',
+            'extra': 'Extra'
+          }
+          ..selectedOption = props.value.name
+          ..style = {'marginBottom': '.5rem'}
+      )(),
 
       props.value is IncomeBucketValue ? (_InputBucketValueEditor()
         ..value = (props.value as IncomeBucketValue).amount
@@ -65,17 +67,18 @@ UiFactory<BucketValueEditorProps> BucketValueEditor = uiFunction(
 // ---------------------------------- InputBucketValue ----------------------------------
 
 mixin _InputBucketValueEditorProps on UiProps {
-  int value;
-  void Function(int) onValueChange;
+  double value;
+  void Function(double) onValueChange;
 }
 
 UiFactory<_InputBucketValueEditorProps> _InputBucketValueEditor = uiFunction(
   (props) {
     return Dom.div()(
       (Dom.input()
+        ..className = 'text-input__amount'
         ..defaultValue = props.value
         ..type = 'number'
-        ..onBlur = ((e) => props.onValueChange(int.parse(e.target.value)))
+        ..onBlur = ((e) => props.onValueChange(double.parse(e.target.value)))
       )()
     );
   },
@@ -102,15 +105,15 @@ UiFactory<_TableBucketValueEditorProps> _TableBucketValueEditor = uiFunction(
         ),
         Dom.tbody()(
           props.value.entries.map((entry) => (Dom.tr()
-            ..key = entry.key
+            ..key = entry.name
           )(
             Dom.td()(
               (Dom.input()
-                ..defaultValue = entry.key
+                ..defaultValue = entry.name
                 ..onBlur = ((e) {
                   final i = props.value.entries.indexOf(entry);
                   props.onValueChange(props.value.rebuild((b) => b
-                    ..entries[i] = MapEntry(e.target.value as String, entry.value)
+                    ..entries[i] = entry.rebuild((eb) => eb..name = e.target.value as String)
                   ));
                 })
               )()
@@ -118,11 +121,11 @@ UiFactory<_TableBucketValueEditorProps> _TableBucketValueEditor = uiFunction(
             Dom.td()(
               (Dom.input()
                 ..type = 'number'
-                ..defaultValue = entry.value
+                ..defaultValue = entry.amount
                 ..onBlur = ((e) {
                   final i = props.value.entries.indexOf(entry);
                   props.onValueChange(props.value.rebuild((b) => b
-                    ..entries[i] = MapEntry(entry.key, double.parse(e.target.value))
+                    ..entries[i] = entry.rebuild((eb) => eb..amount = double.parse(e.target.value))
                   ));
                 })
               )()
@@ -142,7 +145,7 @@ UiFactory<_TableBucketValueEditorProps> _TableBucketValueEditor = uiFunction(
       (Dom.button()
         ..onClick = ((_) {
           props.onValueChange(props.value.rebuild((b) => b
-            ..entries.add(MapEntry('', 0))
+            ..entries.add(TableBucketValueEntry())
           ));
         })
       )('+')

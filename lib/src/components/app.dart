@@ -34,14 +34,21 @@ UiFactory<AppProps> App = uiFunction(
     return (Dom.div()
       ..className = 'main-content'
     )(
+      (Dom.div()
+        ..className = 'header'
+      )(MonthSelector()()),
+      // TODO: Fix this weirdness
       Dom.div()(),
-      Dom.div()(
+      Dom.div()(),
+      Dom.div()(),
+      Dom.div()(),
+      (Dom.div()
+        ..className = 'lhp'
+      )(
         TransactionsPanel()()
       ),
-      Dom.div()(
-        MonthSelector()(),
+      (Dom.div()..className = 'body')(
         rootItemIds.map((itemId) {
-
           return (Card()
             ..key = itemId
             ..className = 'item-layout__card'
@@ -57,7 +64,9 @@ UiFactory<AppProps> App = uiFunction(
         }),
         RootNewButton()()
       ),
-      Dom.div()(
+      (Dom.div()
+        ..className = 'rhp'
+      )(
         selectedItemId != null ? (BucketDetailsPanel()
           ..itemId = selectedItemId
         )() : null

@@ -1,0 +1,39 @@
+.tabs {
+    $border: solid 1px lightgrey;
+    border: $border;
+    margin-top: 1rem;
+
+    .tabs__header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background-color: rgba(40,44,42,0.05);
+    
+        .tab-item {
+            box-sizing: border-box;
+            width: 8rem;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+
+            &:not(:last-child) {
+                border-right: $border;
+            }
+            
+            &.selected {
+                border-top: solid var(--green) 5px;
+                color: var(--green);
+                background-color: #FFF;
+            }
+    
+            &:hover {
+                color: var(--green);
+            }
+        }
+    }
+
+    .tabs__body {
+        margin: 1rem;
+    }
+}

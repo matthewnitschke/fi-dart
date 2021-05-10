@@ -12,12 +12,14 @@ mixin ItemLayoutProps on UiProps {
   void Function(String label) onLabelChange;
 }
 
-UiFactory<ItemLayoutProps> ItemLayout = uiFunction(
-  (props) {
+
+UiFactory<ItemLayoutProps> ItemLayout = uiForwardRef(
+  (props, ref) {
     final classNameBuilder = ClassNameBuilder.fromProps(props)
       ..add('item-layout');
 
     return (Dom.div()
+      ..ref = ref
       ..className = classNameBuilder.toClassName()
     )(
       (Dom.div()

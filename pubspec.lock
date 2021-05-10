@@ -225,6 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.6"
+  dnd:
+    dependency: "direct main"
+    description:
+      name: dnd
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.3"
   fixnum:
     dependency: transitive
     description:

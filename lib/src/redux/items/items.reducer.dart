@@ -15,6 +15,8 @@ class ItemsReducer {
     TypedReducer<BuiltMap<String, Item>, AddBucketGroupAction>(_onAddBucketGroup),
     TypedReducer<BuiltMap<String, Item>, SetItemLabelAction>(_onSetItemLabel),
     TypedReducer<BuiltMap<String, Item>, SetBucketValueAction>(_onSetBucketValue),
+    TypedReducer<BuiltMap<String, Item>, AllocateTransactionAction>(_onAllocateTransaction),
+    TypedReducer<BuiltMap<String, Item>, UnallocateTransactionAction>(_onUnallocateTransaction),
   ]);
 
   BuiltMap<String, Item> _onAddBucket(BuiltMap<String, Item> state, AddBucketAction action) {
@@ -64,5 +66,29 @@ class ItemsReducer {
         return bb..value = action.value;
       })
     );
+  }
+
+  BuiltMap<String, Item> _onAllocateTransaction(BuiltMap<String, Item> state, AllocateTransactionAction action) {
+    return state.rebuild((b) => b
+      ..[action.itemId] = b[action.itemId].rebuild((ib) {
+        final bb = ib as BucketBuilder;
+        return bb..transactions.add(action.transactionId);
+      })
+    );
+  }
+
+  BuiltMap<String, Item> _onUnallocateTransaction(BuiltMap<String, Item> state, UnallocateTransactionAction action) {
+    final stateBuilder = state.toBuilder();
+
+    stateBuilder.updateAllValues((itemId, item) {
+      if (item is Bucket && item.transactions.contains(action.transactionId)) {
+        return item.rebuild((ib) => ib
+          ..transactions.remove(action.transactionId)
+        );
+      }
+      return item;
+    });
+
+    return stateBuilder.build();
   }
 }

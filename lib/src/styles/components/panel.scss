@@ -2,6 +2,8 @@
     .panel__header {
         font-size: 1.7rem;
         font-weight: 600;
-        margin: 1rem 0;
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
     }
 }

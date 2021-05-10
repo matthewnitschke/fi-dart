@@ -56,6 +56,7 @@ UiFactory<TransactionListProps> TransactionList = uiFunction(
           groupedTransacitons[dateStr].map((entry) {
             return (TransactionPill()
               ..key = entry.key
+              ..transactionId = entry.key
               ..merchant = entry.value.merchant
               ..amount = entry.value.amount
             )();

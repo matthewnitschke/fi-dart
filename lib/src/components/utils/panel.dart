@@ -6,17 +6,22 @@ part 'panel.over_react.g.dart';
 
 mixin PanelProps on UiProps {
   String header;
+  ReactElement Function() headerRightContent;
 }
 
-UiFactory<PanelProps> Panel = uiFunction(
-  (props) {
-    return (Dom.div()
+UiFactory<PanelProps> Panel = uiForwardRef(
+  (props, ref) {
+    return (Card()
       ..className = 'panel'
+      ..ref = ref
     )(
       (Dom.div()
         ..className = 'panel__header'
-      )(props.header),
-      Card()(props.children)
+      )(
+        props.header,
+        props.headerRightContent?.call()
+      ),
+      props.children
     );
   },
   _$PanelConfig, // ignore: undefined_identifier

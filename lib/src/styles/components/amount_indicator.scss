@@ -2,10 +2,19 @@
     background-color: lightgrey;
     height: 2px;
     overflow: hidden;
+
+    &.amount-indicator__large {
+        height: 6px;
+        border-radius: 3px;
+
+        .current {
+            border-radius: 3px;
+        }
+    }
     
     & .current {
         background-color: #62ce66;
-        height: 2px;
+        height: 100%;
         transition: width 0.5s;
     }
 
