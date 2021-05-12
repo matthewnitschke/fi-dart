@@ -10,8 +10,8 @@ mixin ItemLayoutProps on UiProps {
   ReactElement Function() rightContent;
 
   void Function(String label) onLabelChange;
+  void Function(SyntheticMouseEvent) onLabelFocus;
 }
-
 
 UiFactory<ItemLayoutProps> ItemLayout = uiForwardRef(
   (props, ref) {
@@ -32,6 +32,7 @@ UiFactory<ItemLayoutProps> ItemLayout = uiForwardRef(
           ..value = props.label
           ..placeholder = 'Label'
           ..onChange = ((e) => props.onLabelChange(e.target.value))
+          ..onClick = props.onLabelFocus
         )(),
 
         props.headerContent?.call(),

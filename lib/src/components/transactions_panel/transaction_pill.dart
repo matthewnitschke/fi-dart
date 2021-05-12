@@ -11,7 +11,9 @@ mixin TransactionPillProps on UiProps {
 
 UiFactory<TransactionPillProps> TransactionPill = uiFunction(
   (props) {
-    final container = useDraggable();
+    final container = useDraggable(
+      avatarHandler: TransactionAvatarHandler()
+    );
 
     final classNameBuilder = ClassNameBuilder()
       ..add('transaction-pill')

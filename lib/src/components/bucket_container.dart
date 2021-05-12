@@ -50,6 +50,7 @@ UiFactory<BucketContainerProps> BucketContainer = uiFunction(
       ..label = bucket.label
       ..onLabelChange = ((newLabel) => dispatch(SetItemLabelAction(props.itemId, newLabel)))
       ..headerContent = (() => Dom.div()('\$$bucketAmount'))
+      ..onLabelFocus = ((_) => dispatch(SelectItemAction(props.itemId)))
       ..rightContent = (() => (DetailsHandle()
         ..onClick = ((_) => dispatch(SelectItemAction(props.itemId)))
         ..isSelected = selectedItemId == props.itemId

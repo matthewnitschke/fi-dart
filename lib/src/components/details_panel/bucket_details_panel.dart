@@ -1,10 +1,12 @@
 
 import 'package:fi/src/components/bucket_amount_indicator.dart';
+import 'package:fi/src/components/details_panel/bucket_borrow_list.dart';
 import 'package:fi/src/components/details_panel/bucket_transactions_list.dart';
 import 'package:fi/src/components/details_panel/bucket_value_editor.dart';
 import 'package:fi/src/components/utils/panel.dart';
 import 'package:fi/src/components/utils/tabs.dart';
 import 'package:fi/src/models/bucket.sg.dart';
+import 'package:fi/src/models/bucket_value.sg.dart';
 import 'package:fi/src/redux/items/items.actions.dart';
 import 'package:fi/src/redux/selectors.dart';
 import 'package:fi/src/utils.dart';
@@ -48,7 +50,7 @@ UiFactory<BucketDetailsPanelProps> BucketDetailsPanel = uiFunction(
         ..tabs = {
           'details': 'Details',
           'transactions': 'Transactions',
-          'borrows': 'Borrows'
+          if (item.value is! IncomeBucketValue) 'borrows': 'Borrows'
         }
         ..selectedKey = selectedTab.value
         ..onTabClick = ((key) => selectedTab.set(key))
@@ -75,6 +77,8 @@ UiFactory<BucketDetailsPanelProps> BucketDetailsPanel = uiFunction(
         ) : null,
 
         selectedTab.value == 'transactions' ? (BucketTransactionsList()..itemId = props.itemId)() : null,
+
+        selectedTab.value == 'borrows' ? (BucketBorrowList()..itemId = props.itemId)() : null,
       ),
 
 

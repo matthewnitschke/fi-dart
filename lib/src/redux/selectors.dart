@@ -8,12 +8,14 @@ double bucketAmountSelector(AppState state, String bucketId) {
   }
 
   final bucketValue = (state.items[bucketId] as Bucket).value;
+
+  double calculatedValue;
   if (bucketValue is StaticBucketValue) {
-    return bucketValue.amount;
+    calculatedValue = bucketValue.amount;
   } else if (bucketValue is IncomeBucketValue) {
-    return bucketValue.amount;
+    calculatedValue = bucketValue.amount;
   } else if (bucketValue is TableBucketValue) {
-    return bucketValue.entries.fold<double>(0.0, (acc, entry) => acc + entry.amount);
+    calculatedValue = bucketValue.entries.fold<double>(0.0, (acc, entry) => acc + entry.amount);
   } else if (bucketValue is ExtraBucketValue) {
 
     final income = state.items.keys.fold<double>(0.0, (acc, itemId) {
@@ -33,10 +35,22 @@ double bucketAmountSelector(AppState state, String bucketId) {
     });
 
 
-    return income - expense;
+    calculatedValue = income - expense;
   } else {
     throw Exception('Unknown bucket value type ${bucketValue.runtimeType}');
   }
+
+  calculatedValue += state.borrows?.values?.fold<double>(0.0, (acc, borrow) {
+    if (borrow.toId == bucketId) {
+      acc += borrow.amount;
+    } else if (borrow.fromId == bucketId) {
+      acc -= borrow.amount;
+    }
+
+    return acc;
+  }) ?? 0;
+
+  return calculatedValue;
 }
 
 double bucketTransactionsSum(AppState state, String itemId) {

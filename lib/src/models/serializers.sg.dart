@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:fi/src/models/app_state.sg.dart';
+import 'package:fi/src/models/borrow.sg.dart';
 import 'package:fi/src/models/bucket.sg.dart';
 import 'package:fi/src/models/bucket_group.sg.dart';
 import 'package:fi/src/models/bucket_value.sg.dart';
@@ -22,5 +23,6 @@ part 'serializers.sg.g.dart';
   ExtraBucketValue,
   Bucket,
   Transaction,
+  Borrow,
 ])
 Serializers serializers = (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

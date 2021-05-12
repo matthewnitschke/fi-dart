@@ -34,7 +34,7 @@ body {
     ". . header ."
     ". lhp body rhp";
 
-  column-gap: 10px;
+  column-gap: 15px;
 
   padding: 0 .5rem;
   padding-top: 1rem;
@@ -59,6 +59,13 @@ body {
   }
 }
 
+.dnd-over {
+  background-color: lightblue;
+  
+  input {
+    background-color: lightblue;
+  }
+}
 @import './components/bucket_group_container.scss';
 @import './components/button.scss';
 @import './components/root_new_button.scss';

@@ -1,7 +1,6 @@
 import 'package:fi/src/components/bucket_container.dart';
 import 'package:fi/src/components/item_layout.dart';
 import 'package:fi/src/components/utils/button.dart';
-import 'package:fi/src/components/utils/text_input.dart';
 import 'package:fi/src/models/bucket_group.sg.dart';
 import 'package:fi/src/redux/items/items.actions.dart';
 import 'package:fi/src/utils.dart';
