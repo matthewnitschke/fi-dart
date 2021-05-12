@@ -26,6 +26,7 @@ Ref useDraggable({
 
 Ref useDropzone({ 
   Acceptor acceptor,
+  String overClass,
   void Function(DropzoneEvent) onDrop,
 }) {
   final ref = useRef();
@@ -34,6 +35,7 @@ Ref useDropzone({
     final droppable = Dropzone(
       ref.current,
       acceptor: acceptor,
+      overClass: overClass
     );
 
     var onDropSubscription;

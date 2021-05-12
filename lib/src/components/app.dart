@@ -4,7 +4,7 @@ import 'package:fi/src/components/bucket_group_container.dart';
 import 'package:fi/src/components/month_selector.dart';
 import 'package:fi/src/components/root_new_button.dart';
 import 'package:fi/src/components/transactions_panel/transactions_panel.dart';
-import 'package:fi/src/components/utils/card.dart';
+import 'package:fi/src/components/utils/sortable_card.dart';
 import 'package:fi/src/models/bucket_group.sg.dart';
 import 'package:fi/src/utils.dart';
 import 'package:over_react/over_react.dart';
@@ -49,7 +49,7 @@ UiFactory<AppProps> App = uiFunction(
       ),
       (Dom.div()..className = 'body')(
         rootItemIds.map((itemId) {
-          return (Card()
+          return (SortableCard()
             ..key = itemId
             ..className = 'item-layout__card'
           )(

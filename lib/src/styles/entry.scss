@@ -25,6 +25,10 @@ body {
   background-color: var(--background);
 }
 
+.hide {
+  visibility: hidden;
+}
+
 .main-content {
   display: grid;
   grid-template-rows: 3rem auto;
