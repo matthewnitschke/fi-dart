@@ -1,0 +1,24 @@
+FROM google/dart:2.7.2 as build
+
+RUN apt-mark hold dart
+
+RUN apt-get update -qq && \
+    apt-get dist-upgrade -y && \
+    apt-get autoremove -y && \
+    apt-get clean all
+RUN apt-get install -y \
+	build-essential \
+	curl \
+	git \
+	make \
+	parallel \
+	wget \
+	&& rm -rf /var/lib/apt/lists/*
+
+RUN pub global activate webdev ^2.0.0
+RUN pub global activate webdev_proxy
+
+ENV PATH=$PATH:/root/.pub-cache/bin
+
+ENV DART_VM_OPTIONS="--old-gen-heap-size=32000"
+ENV BUILD_DART2JS_VM_ARGS="--old-gen-heap-size=32000"

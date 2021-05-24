@@ -1,0 +1,25 @@
+{
+  "name": "server-v2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js",
+    "format": "prettier --write . --config ../.prettierrc"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.0.6",
+    "mongoose": "^5.10.16",
+    "plaid": "^8.1.2",
+    "to-mils": "^1.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.14.0",
+    "prettier": "^2.2.0"
+  }
+}

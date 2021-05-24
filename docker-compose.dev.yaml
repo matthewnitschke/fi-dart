@@ -1,0 +1,30 @@
+services:
+  # ngrok:
+  #   entrypoint: ["echo", "ngrok disabled in dev mode"]
+
+  db:
+    logging:
+      driver: none
+    volumes:
+      - "./mongo-data:/data/db"
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    command: nodemon --watch server /usr/src/app/server/app.js
+    volumes:
+      - ./server/:/usr/src/app/server
+      - ./client/:/usr/src/app/client
+      - ./auth-client/:/usr/src/app/auth-client
+    environment:
+      - NODE_ENV=development
+      - SESSION_SECRET="Shhh... development only"
+
+  client:
+      build:
+        context: client
+        dockerfile: Dockerfile-dev
+      command: cd /usr/src/app/client && webdev_proxy serve -- -- --delete-conflicting-outputs
+      volumes:
+        - ./client/:/usr/src/app/client

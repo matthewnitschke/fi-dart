@@ -1,5 +1,7 @@
-gen-built:
-	pub run build_runner build lib --delete-conflicting-outputs
+.PHONY: server client
 
-serve:
-	webdev serve
+server:
+	doppler run --command="docker compose -f docker-compose.yaml -f docker-compose.dev.yaml up"
+
+client:
+	(cd client && webdev serve)

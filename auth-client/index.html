@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fi - Login</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <link rel="stylesheet" href="login/styles.css">
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&display=swap"
+      rel="stylesheet"
+    />
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="login-form__wrapper">
+            <form @submit="submit">
+                <h2>Fi</h2>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" v-model="email" />
+                </div>
+    
+                <div class="input-group">
+                    <label for="pass">Password</label>
+                    <input type="password" id="pass" v-model="password" />
+                </div>
+    
+    
+                <div v-if="isSignup" class="input-group">
+                    <label for="verify-pass">Verify Password</label>
+                    <input type="password" id="verify-pass" v-model="verifyPassword" />
+                </div>
+        
+                <div style="margin-bottom: 0.7rem;">
+                    {{ message }}
+                </div>
+
+                <input type="submit" :value="isSignup ? 'Sign Up' : 'Login'">
+            </form>
+            <div class="login-form__footer">
+                <a v-if="isSignup" @click="isSignup = false">Back</a>
+                <a v-else @click="isSignup = true">Create Account</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                email: '',
+                password: '',
+                verifyPassword: '',
+
+                message: '',
+
+                isSignup: false
+            },
+            methods: {
+                submit: async function(e) {
+                    e.preventDefault();
+
+                    let url = '/login/authenticate'
+                    if (this.isSignup) {
+                        if (this.password != this.verifyPassword) {
+                            this.message = 'Passwords do not match'
+                            return;
+                        }
+                        url = '/login/signup'
+                    }
+
+                    let resp = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: this.email,
+                            password: this.password,
+                        }),
+                    })
+
+                    if (resp.status < 300){
+                        window.location = '/'
+                    } else {
+                        let body = await resp.json()
+                        this.message = body.message;
+                    }
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>

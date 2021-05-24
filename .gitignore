@@ -1,4 +1,8 @@
-.dart_tool
-.packages
-*.sg.g.dart
-build
+client/.dart_tool
+client/.packages
+client/*.sg.g.dart
+client/build
+
+server/node_modules
+
+mongo-data
