@@ -19,20 +19,19 @@ UiFactory<LoginAppProps> LoginApp = uiFunction(
 
         fetch(
           '/login/authenticate', 
-          method: FetchMethod.post,
           body: {
             'email': email.value,
             'password': pass.value
           }
         ).then((resp) {
-          // if (resp.statusCode < 300) {
-          //   final from = Uri.base.queryParameters['from'];
-          //   if (from != null) {
-          //     window.location.href = from;
-          //   } else {
-          //     window.location.href = '/';
-          //   }
-          // }
+          if (resp.statusCode < 300) {
+            final from = Uri.base.queryParameters['from'];
+            if (from != null) {
+              window.location.href = from;
+            } else {
+              window.location.href = '/';
+            }
+          }
         });
       })
     )(

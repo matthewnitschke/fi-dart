@@ -1,39 +1,38 @@
 const path = require('path');
 
-const bodyParser = require('body-parser');
 const express = require('express');
 const session = require('express-session');
-const cors = require('cors');
 const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 const authentication = require('./middleware/authentication');
 
 const app = express();
-const port = 8080;
+const port = 8888;
+
+// a list of routes that are acceptable and serve the index.html file
+const availableRoutes = ['/', '/plaid-admin'];
 
 (async () => {
   await require('./db')(); // ensure db is initialized
 
+  
   app.use(
     session({
       secret: process.env.SESSION_SECRET ?? 'secret-dev-stuff',
       store: new MongoStore({ mongooseConnection: mongoose.connection }),
     })
   );
-
-  app.use(cors());
-
+  
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
-
+  
   app.use('/login', require('./controllers/login'));
-
+    
+  availableRoutes.forEach((route) => {
+    app.use(route, express.static(path.join(__dirname, '../client/build/web')))
+  })
+  
   app.use(authentication);
-
-  // static assets
-  // app.use('/', express.static(path.join(__dirname, '../client/build')));
-  // app.use('/', express.static(path.join(__dirname, '../client')));
-
   app.use('/budget', require('./controllers/api/budget'));
   app.use('/transactions', require('./controllers/api/transactions'));
   app.use('/plaid', require('./controllers/api/plaid'));

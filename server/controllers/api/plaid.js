@@ -24,7 +24,7 @@ const client = new plaid.Client({
 //   }
 // };
 
-router.get('/accounts', async (req, res) => {
+router.all('/accounts', async (req, res) => {
   const { email } = req.query
 
   let accounts = await Account.find({

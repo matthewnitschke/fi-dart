@@ -20,11 +20,3 @@ services:
     environment:
       - NODE_ENV=development
       - SESSION_SECRET="Shhh... development only"
-
-  client:
-      build:
-        context: client
-        dockerfile: Dockerfile-dev
-      command: cd /usr/src/app/client && webdev_proxy serve -- -- --delete-conflicting-outputs
-      volumes:
-        - ./client/:/usr/src/app/client

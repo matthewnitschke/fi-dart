@@ -64,7 +64,7 @@ router.post('/signup', async (req, res) => {
   });
 });
 
-router.post('/logout', async (req, res) => {
+router.all('/logout', async (req, res) => {
   req.session.destroy();
 
   res.status(200).send({

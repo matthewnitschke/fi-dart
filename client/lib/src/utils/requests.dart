@@ -11,28 +11,24 @@ enum FetchMethod {
   post,
 }
 
-Future<String> fetch(
+Future<http.Response> fetch(
   String url,
-  { FetchMethod method = FetchMethod.get, Map<String, dynamic> body, }
+  { Map<String, dynamic> body, }
 ) async {
-  
-  final resp = await HttpRequest.request(
+
+  final resp = await http.post(
     '$path$url',
-    method: method == FetchMethod.get ? 'GET' : 'POST',
-    withCredentials: true,
-    sendData: body != null ? json.encode(body) : null,
-    requestHeaders: {
+    body: body != null ? json.encode(body) : null,
+    headers: {
       if (body != null) 'Content-Type': 'application/json'
     }
   );
 
-  if (resp.status == 401) { // unauthorized
+  if (resp.statusCode == 401) { // unauthorized
     var encoded = Uri.encodeFull(window.location.href.toString());
     window.location.href = '/login?from=$encoded';
     return null;
   }
 
-  print(resp.response);
-  return '';
-
+  return resp;
 }
