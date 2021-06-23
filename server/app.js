@@ -36,6 +36,7 @@ const availableRoutes = ['/', '/plaid-admin'];
   app.use('/budget', require('./controllers/api/budget'));
   app.use('/transactions', require('./controllers/api/transactions'));
   app.use('/plaid', require('./controllers/api/plaid'));
+  app.use('/plaid-admin', require('./controllers/api/plaid-admin'));
 
   app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

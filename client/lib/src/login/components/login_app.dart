@@ -2,7 +2,6 @@ import 'dart:html';
 
 import 'package:fi/src/utils/requests.dart';
 import 'package:over_react/over_react.dart';
-import 'package:http/http.dart' as http;
 
 part 'login_app.over_react.g.dart';
 

@@ -1,47 +1,13 @@
-const plaid = require('plaid');
+
 const mongoose = require('mongoose');
 const Transaction = require('../../models/Transaction');
+
+const { plaidClient, plaidEnv } = require('./plaid-utils.js');
 
 const express = require('express');
 const router = express.Router();
 
 const Account = require('../../models/Account');
-
-const client = new plaid.Client({
-  clientID: process.env.PLAID_CLIENT_ID,
-  secret: process.env.PLAID_SECRET,
-  env: plaid.environments.sandbox,
-  options: {
-    version: '2019-05-29',
-  },
-});
-
-// const e = (req, res, next) => {
-//   if (req.session.accountId != null) {
-//     next();
-//   } else {
-//     res.status(500).send("Not Authenticated");
-//   }
-// };
-
-router.all('/accounts', async (req, res) => {
-  const { email } = req.query
-
-  let accounts = await Account.find({
-    ...(!!email && {
-      email: { '$regex': email, '$options': 'i' },
-    })
-  });
-
-  res.status(200).json(
-    accounts.map(({email, plaidAccessToken}) => {
-      return {
-        email,
-        plaidAccessToken
-      }
-    })
-  );
-});
 
 router.post('/setAccessToken', async (req, res) => {
   const { email, token } = req.body;
@@ -60,7 +26,7 @@ router.get('/getBankAccounts', async (req, res) => {
     })
   }
 
-  client.getAccounts(req.session.plaidAccessToken, (error, accountsResp) => {
+  plaidClient.getAccounts(req.session.plaidAccessToken, (error, accountsResp) => {
     if (error != null) {
       console.error(error);
       return res.status(500).json({
@@ -80,7 +46,7 @@ router.get('/syncTransactions', async (req, res) => {
   }
 
   try {
-    let response = await client.getTransactions(
+    let response = await plaidClient.getTransactions(
       req.session.plaidAccessToken,
       '2020-12-01',
       '2021-02-01',
