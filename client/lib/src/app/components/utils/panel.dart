@@ -12,7 +12,9 @@ mixin PanelProps on UiProps {
 UiFactory<PanelProps> Panel = uiForwardRef(
   (props, ref) {
     return (Card()
-      ..className = 'panel'
+      ..className = (ClassNameBuilder.fromProps(props)
+        ..add('panel')
+      ).toClassName()
       ..ref = ref
     )(
       (Dom.div()

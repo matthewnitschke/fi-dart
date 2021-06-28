@@ -15,6 +15,12 @@ router.post('/authenticate', async (req, res) => {
   console.log('authenticate');
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(400).send({
+      message: "Missing email or password"
+    })
+  }
+
   let account = await Account.findOne({
     email,
   });

@@ -9,16 +9,6 @@ const router = express.Router();
 
 const Account = require('../../models/Account');
 
-router.post('/setAccessToken', async (req, res) => {
-  const { email, token } = req.body;
-
-  await Account.findOneAndUpdate({
-    email
-  }, { plaidAccessToken: token });
-
-  res.status(200).send('OK');
-});
-
 router.get('/getBankAccounts', async (req, res) => {
   if (req.session.plaidAccessToken == null) {
     return res.status(500).json({
@@ -39,17 +29,25 @@ router.get('/getBankAccounts', async (req, res) => {
 });
 
 router.get('/syncTransactions', async (req, res) => {
+  const { from, to } = req.query;
+
   if (req.session.plaidAccessToken == null) {
     return res.status(500).json({
       error: 'Plaid ACCESS_TOKEN not initialized. If just set, try logging in and out again.'
     })
   }
 
+  if (!from || !to) {
+    return res.status(500).json({
+      error: 'missing "from" or "to" query parameters'
+    })
+  }
+
   try {
     let response = await plaidClient.getTransactions(
       req.session.plaidAccessToken,
-      '2020-12-01',
-      '2021-02-01',
+      from,
+      to,
       {
         // account_ids: [],
         // count: 0,
@@ -66,11 +64,11 @@ router.get('/syncTransactions', async (req, res) => {
             fiAccountId: req.session.accountId,
         
             date: transaction.date,
-            merchant: transaction.merchant_name,
+            merchant: transaction.name,
             amount: transaction.amount,
             isPending: transaction.pending,
 
-            isUserCreated: false,
+            raw: transaction
           },
           upsert: true,
         }

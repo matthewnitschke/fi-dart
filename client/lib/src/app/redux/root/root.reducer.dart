@@ -1,9 +1,5 @@
-import 'dart:convert';
-
 import 'package:fi/src/app/models/app_state.sg.dart';
-import 'package:fi/src/app/models/bucket.sg.dart';
 import 'package:fi/src/app/models/bucket_group.sg.dart';
-import 'package:fi/src/app/models/serializers.sg.dart';
 import 'package:fi/src/app/redux/items/items.actions.dart';
 import 'package:fi/src/app/redux/root/root.actions.dart';
 import 'package:redux/redux.dart';
@@ -20,7 +16,12 @@ class RootReducer {
   ]);
 
   AppState _onLoadState(AppState state, LoadStateAction action) {
-    return serializers.deserializeWith(AppState.serializer, json.decode(action.encodedState));
+    return state.rebuild((b) => b
+      ..items = action.items.toBuilder()
+      ..rootItemIds = action.rootItemIds.toBuilder()
+      ..borrows = action.borrows.toBuilder()
+      ..transactions = action.transactions.toBuilder()
+    );
   }
 
   AppState _onAddBucketGroup(AppState state, AddBucketGroupAction action) {

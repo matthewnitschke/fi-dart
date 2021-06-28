@@ -1,12 +1,20 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:fi/src/app/models/borrow.sg.dart';
+import 'package:fi/src/app/models/item.sg.dart';
+import 'package:fi/src/app/models/transaction.sg.dart';
+
 class LoadStateAction {
+  final BuiltMap<String, Item> items;
+  final BuiltList<String> rootItemIds;
+  final BuiltMap<String, Borrow> borrows;
+  final BuiltMap<String, Transaction> transactions;
 
-  // final String encodedItems;
-  // final String encodedRootItemIds;
-  // final String encodedTransactions;
-
-  final String encodedState;
-
-  LoadStateAction(this.encodedState);
+  LoadStateAction({
+    this.items,
+    this.rootItemIds,
+    this.borrows,
+    this.transactions,
+  });
 }
 
 class SelectItemAction {

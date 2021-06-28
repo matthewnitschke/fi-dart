@@ -28,8 +28,10 @@ UiFactory<TransactionsPanelProps> TransactionsPanel = uiFunction(
     return (Panel()
       ..header = 'Transactions'
       ..ref = ref
+      ..className = 'h100'
     )(
       (TransactionList()
+        ..className = 'scroll'
         ..transactionIds = transactions
       )()
     );

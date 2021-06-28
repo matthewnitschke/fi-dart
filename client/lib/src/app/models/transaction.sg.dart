@@ -6,6 +6,7 @@ part 'transaction.sg.g.dart';
 abstract class Transaction implements Built<Transaction, TransactionBuilder> {
   double get amount;
 
+  @nullable
   String get merchant;
 
   DateTime get date;

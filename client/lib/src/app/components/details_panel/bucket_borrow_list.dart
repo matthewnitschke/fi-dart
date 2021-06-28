@@ -74,6 +74,7 @@ UiFactory<BucketBorrowListProps> BucketBorrowList = uiFunction(
               acc.add(
                 (Dom.optgroup()
                   ..label = items[itemId].label
+                  ..key = itemId
                 )(
                   subItemIds.map(
                     (subItemId) => _renderOption(subItemId),

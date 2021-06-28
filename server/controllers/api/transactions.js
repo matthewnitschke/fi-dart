@@ -6,9 +6,10 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   const { from, to } = req.query;
 
+  console.log(from, to, req.session.accountId)
   let transactions = await Transaction.find({
     fiAccountId: req.session.accountId,
-    date: { $gte: from, $lte: to },
+    date: { $gte: new Date(from), $lte: new Date(to) },
   });
 
   res.status(200).send(transactions);
@@ -25,20 +26,5 @@ router.get('/:transactionId', async (req, res) => {
   res.status(200).json(transaction);
 });
 
-router.post('/', async (req, res) => {
-  const { date, merchant, amount } = req.body;
-
-  let newTransaction = new Transaction({
-    merchant,
-    fiAccountId: req.session.accountId,
-    amount: amount,
-    date: new Date(date),
-    isUserCreated: true,
-  });
-
-  let postedTransaction = await newTransaction.save();
-
-  res.status(200).json(postedTransaction);
-});
 
 module.exports = router;

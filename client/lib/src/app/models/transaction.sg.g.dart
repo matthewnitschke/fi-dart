@@ -21,14 +21,16 @@ class _$TransactionSerializer implements StructuredSerializer<Transaction> {
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
-      'merchant',
-      serializers.serialize(object.merchant,
-          specifiedType: const FullType(String)),
       'date',
       serializers.serialize(object.date,
           specifiedType: const FullType(DateTime)),
     ];
-
+    if (object.merchant != null) {
+      result
+        ..add('merchant')
+        ..add(serializers.serialize(object.merchant,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -76,9 +78,6 @@ class _$Transaction extends Transaction {
   _$Transaction._({this.amount, this.merchant, this.date}) : super._() {
     if (amount == null) {
       throw new BuiltValueNullFieldError('Transaction', 'amount');
-    }
-    if (merchant == null) {
-      throw new BuiltValueNullFieldError('Transaction', 'merchant');
     }
     if (date == null) {
       throw new BuiltValueNullFieldError('Transaction', 'date');

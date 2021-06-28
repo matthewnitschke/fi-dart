@@ -9,8 +9,9 @@ const TransactionSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
   
   merchant: String,
-  isUserCreated: Boolean, // whether or not this transaction was manually created
   isPending: Boolean,
+
+  raw: Object
 }, {_id: false});
 
 module.exports = mongoose.model('Transaction', TransactionSchema);

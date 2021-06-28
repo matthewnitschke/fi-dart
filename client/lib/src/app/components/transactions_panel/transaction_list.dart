@@ -39,7 +39,9 @@ UiFactory<TransactionListProps> TransactionList = uiFunction(
       return aDate.compareTo(bDate);
     });
 
-    return Dom.div()(
+    return (Dom.div()
+      ..className = ClassNameBuilder.fromProps(props).toClassName()
+    )(
       sortedDates.map((dateStr) {
         return (Dom.div()
           ..key = dateStr
