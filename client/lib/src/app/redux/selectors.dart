@@ -56,10 +56,12 @@ double bucketAmountSelector(AppState state, String bucketId) {
 double bucketTransactionsSum(AppState state, String itemId) {
   final bucket = (state.items[itemId] as Bucket);
 
-  return bucket.transactions.fold(
+  final transactionsSum = bucket.transactions.fold<double>(
     0.0, 
     (acc, transactionId) => acc + state.transactions[transactionId].amount,
   ).abs();
+
+  return transactionsSum;
 }
 
 List<String> unallocatedTransactionsSelector(AppState state) {

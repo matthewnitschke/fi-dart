@@ -1,6 +1,6 @@
 import 'package:over_react/over_react.dart';
 
-import 'package:fi/src/app/utils.dart';
+import 'package:fi/src/utils/extensions.dart';
 
 part 'tabs.over_react.g.dart';
 

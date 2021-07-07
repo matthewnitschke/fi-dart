@@ -29,10 +29,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       serializers.serialize(object.rootItemIds,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
-      'transactions',
-      serializers.serialize(object.transactions,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(Transaction)])),
+      'ignoredTransactions',
+      serializers.serialize(object.ignoredTransactions,
+          specifiedType:
+              const FullType(BuiltSet, const [const FullType(String)])),
       'borrows',
       serializers.serialize(object.borrows,
           specifiedType: const FullType(BuiltMap,
@@ -77,12 +77,11 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
                       const FullType(BuiltList, const [const FullType(String)]))
               as BuiltList<Object>);
           break;
-        case 'transactions':
-          result.transactions.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(Transaction)
-              ])));
+        case 'ignoredTransactions':
+          result.ignoredTransactions.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltSet, const [const FullType(String)]))
+              as BuiltSet<Object>);
           break;
         case 'borrows':
           result.borrows.replace(serializers.deserialize(value,
@@ -100,6 +99,8 @@ class _$AppState extends AppState {
   @override
   final DateTime selectedMonth;
   @override
+  final bool isDraggingTransaction;
+  @override
   final String selectedItemId;
   @override
   final BuiltMap<String, Item> items;
@@ -108,6 +109,8 @@ class _$AppState extends AppState {
   @override
   final BuiltMap<String, Transaction> transactions;
   @override
+  final BuiltSet<String> ignoredTransactions;
+  @override
   final BuiltMap<String, Borrow> borrows;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
@@ -115,10 +118,12 @@ class _$AppState extends AppState {
 
   _$AppState._(
       {this.selectedMonth,
+      this.isDraggingTransaction,
       this.selectedItemId,
       this.items,
       this.rootItemIds,
       this.transactions,
+      this.ignoredTransactions,
       this.borrows})
       : super._() {
     if (selectedMonth == null) {
@@ -130,8 +135,8 @@ class _$AppState extends AppState {
     if (rootItemIds == null) {
       throw new BuiltValueNullFieldError('AppState', 'rootItemIds');
     }
-    if (transactions == null) {
-      throw new BuiltValueNullFieldError('AppState', 'transactions');
+    if (ignoredTransactions == null) {
+      throw new BuiltValueNullFieldError('AppState', 'ignoredTransactions');
     }
     if (borrows == null) {
       throw new BuiltValueNullFieldError('AppState', 'borrows');
@@ -150,10 +155,12 @@ class _$AppState extends AppState {
     if (identical(other, this)) return true;
     return other is AppState &&
         selectedMonth == other.selectedMonth &&
+        isDraggingTransaction == other.isDraggingTransaction &&
         selectedItemId == other.selectedItemId &&
         items == other.items &&
         rootItemIds == other.rootItemIds &&
         transactions == other.transactions &&
+        ignoredTransactions == other.ignoredTransactions &&
         borrows == other.borrows;
   }
 
@@ -163,11 +170,15 @@ class _$AppState extends AppState {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc(0, selectedMonth.hashCode),
-                        selectedItemId.hashCode),
-                    items.hashCode),
-                rootItemIds.hashCode),
-            transactions.hashCode),
+                    $jc(
+                        $jc(
+                            $jc($jc(0, selectedMonth.hashCode),
+                                isDraggingTransaction.hashCode),
+                            selectedItemId.hashCode),
+                        items.hashCode),
+                    rootItemIds.hashCode),
+                transactions.hashCode),
+            ignoredTransactions.hashCode),
         borrows.hashCode));
   }
 
@@ -175,10 +186,12 @@ class _$AppState extends AppState {
   String toString() {
     return (newBuiltValueToStringHelper('AppState')
           ..add('selectedMonth', selectedMonth)
+          ..add('isDraggingTransaction', isDraggingTransaction)
           ..add('selectedItemId', selectedItemId)
           ..add('items', items)
           ..add('rootItemIds', rootItemIds)
           ..add('transactions', transactions)
+          ..add('ignoredTransactions', ignoredTransactions)
           ..add('borrows', borrows))
         .toString();
   }
@@ -191,6 +204,11 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   DateTime get selectedMonth => _$this._selectedMonth;
   set selectedMonth(DateTime selectedMonth) =>
       _$this._selectedMonth = selectedMonth;
+
+  bool _isDraggingTransaction;
+  bool get isDraggingTransaction => _$this._isDraggingTransaction;
+  set isDraggingTransaction(bool isDraggingTransaction) =>
+      _$this._isDraggingTransaction = isDraggingTransaction;
 
   String _selectedItemId;
   String get selectedItemId => _$this._selectedItemId;
@@ -214,6 +232,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set transactions(MapBuilder<String, Transaction> transactions) =>
       _$this._transactions = transactions;
 
+  SetBuilder<String> _ignoredTransactions;
+  SetBuilder<String> get ignoredTransactions =>
+      _$this._ignoredTransactions ??= new SetBuilder<String>();
+  set ignoredTransactions(SetBuilder<String> ignoredTransactions) =>
+      _$this._ignoredTransactions = ignoredTransactions;
+
   MapBuilder<String, Borrow> _borrows;
   MapBuilder<String, Borrow> get borrows =>
       _$this._borrows ??= new MapBuilder<String, Borrow>();
@@ -224,10 +248,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   AppStateBuilder get _$this {
     if (_$v != null) {
       _selectedMonth = _$v.selectedMonth;
+      _isDraggingTransaction = _$v.isDraggingTransaction;
       _selectedItemId = _$v.selectedItemId;
       _items = _$v.items?.toBuilder();
       _rootItemIds = _$v.rootItemIds?.toBuilder();
       _transactions = _$v.transactions?.toBuilder();
+      _ignoredTransactions = _$v.ignoredTransactions?.toBuilder();
       _borrows = _$v.borrows?.toBuilder();
       _$v = null;
     }
@@ -254,10 +280,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _$result = _$v ??
           new _$AppState._(
               selectedMonth: selectedMonth,
+              isDraggingTransaction: isDraggingTransaction,
               selectedItemId: selectedItemId,
               items: items.build(),
               rootItemIds: rootItemIds.build(),
-              transactions: transactions.build(),
+              transactions: _transactions?.build(),
+              ignoredTransactions: ignoredTransactions.build(),
               borrows: borrows.build());
     } catch (_) {
       String _$failedField;
@@ -267,7 +295,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _$failedField = 'rootItemIds';
         rootItemIds.build();
         _$failedField = 'transactions';
-        transactions.build();
+        _transactions?.build();
+        _$failedField = 'ignoredTransactions';
+        ignoredTransactions.build();
         _$failedField = 'borrows';
         borrows.build();
       } catch (e) {

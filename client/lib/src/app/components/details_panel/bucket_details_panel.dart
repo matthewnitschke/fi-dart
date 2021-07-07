@@ -39,7 +39,7 @@ UiFactory<BucketDetailsPanelProps> BucketDetailsPanel = uiFunction(
     final header = item.label?.isEmpty == true ? 'Label' : item.label;
     return (Panel()
       ..header = header
-      ..headerRightContent = (() => Dom.div()('\$$transactionsSum / \$$bucketValue'))
+      ..headerRightContent = (() => Dom.div()('\$${transactionsSum.toStringAsFixed(2)} / \$${bucketValue.toStringAsFixed(2)}'))
     )(
       (BucketAmountIndicator()
         ..itemId = props.itemId

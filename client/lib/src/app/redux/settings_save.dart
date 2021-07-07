@@ -3,9 +3,12 @@ import 'dart:html';
 
 import 'package:fi/src/app/fi-client.dart';
 import 'package:fi/src/app/models/app_state.sg.dart';
+import 'package:fi/src/app/models/bucket.sg.dart';
 import 'package:fi/src/app/models/serializers.sg.dart';
 import 'package:fi/src/app/redux/root/root.actions.dart';
 import 'package:redux/redux.dart';
+
+import 'package:built_collection/built_collection.dart';
 
 Middleware<AppState> settingsSaveMiddleware(
   Store<AppState> store, 
@@ -36,8 +39,24 @@ Future<void> loadFromLocalStorage(Store<AppState> store) async {
       DateTime(now.year, now.month+1, 0),
     );
 
+
+    // on the off chance that transactionIds get borked, dont add phantom ones within items
+    final filteredItems = settings.items.map((itemId, item) {
+      if (item is Bucket) {
+        return MapEntry(
+          itemId, item.rebuild((b) => b
+            ..transactions = item.transactions
+              .where((transactionId) {
+                return transactions.keys.contains(transactionId);
+              }).toBuiltList().toBuilder()
+          ),
+        );
+      }
+      return MapEntry(itemId, item);
+    });
+
     store.dispatch(LoadStateAction(
-      items: settings.items,
+      items: filteredItems,
       rootItemIds: settings.rootItemIds,
       borrows: settings.borrows,
       transactions: transactions
@@ -48,6 +67,7 @@ Future<void> loadFromLocalStorage(Store<AppState> store) async {
 bool _haveSettingsChanged(AppState a, AppState b) {
   if (a.items != b.items) return true;
   if (a.transactions != b.transactions) return true;
+  if (a.borrows != b.borrows) return true;
   if (a.rootItemIds != b.rootItemIds) return true;
 
   return false;

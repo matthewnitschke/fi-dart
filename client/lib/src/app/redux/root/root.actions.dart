@@ -22,3 +22,15 @@ class SelectItemAction {
   
   SelectItemAction(this.itemId);
 }
+
+class SetIsDraggingTransactionAction {
+  final bool isDragging;
+  
+  SetIsDraggingTransactionAction(this.isDragging);
+}
+
+class IgnoreTransactionAction {
+  final String transactionId;
+  
+  IgnoreTransactionAction(this.transactionId);
+}

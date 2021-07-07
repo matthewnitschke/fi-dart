@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     next();
   } else {
     console.log('Not authenticated')
-      res.status(401).send("Not Authenticated");
-    // res.redirect('/login');
+    res.redirect('/login');
+    // res.status(401).send("Not Authenticated");
   }
 };

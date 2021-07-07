@@ -1,28 +1,65 @@
+// lightgreen: #9bf59f
+
 .transaction-pill {
-    display: flex;
-    align-items: center;
-    padding: .5rem;
-    border-radius: 3px;
     margin-bottom: .5rem;
-    cursor: pointer;
+
+    .transaction-pill__header {
+        display: flex;
+        align-items: center;
+        padding: .5rem;
+        border-radius: 3px;
+        cursor: pointer;
+
+        .transaction-pill__amount {
+            font-size: 1.05rem;
+            margin-right: .5rem;
+        }
+    
+        .transaction-pill__merchant {
+            font-size: 0.75rem;
+            font-style: italic;
+    
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &.transaction-pill__expanded .transaction-pill__header {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .transaction-pill__body {
+        font-size: .75rem;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+        padding: .5rem;
+    }
 
     &.transaction-pill__income {
-        background-color: var(--green);
-        color: #000;
+        .transaction-pill__header {
+            background-color: var(--green);
+            color: #000;
+        }
+
+        .transaction-pill__body {
+            background-color: #9bf59f;
+            color: #000;
+        }
     }
 
-    &.transaction-pill__expence {
-        background-color: var(--red);
-        color: #FFF;
+    &.transaction-pill__expense {
+        .transaction-pill__header {
+            background-color: var(--red);
+            color: #FFF;
+        }
+
+        .transaction-pill__body {
+            background-color: #ff6d6d;
+            color: #FFF;
+        }
     }
 
-    .transaction-pill__amount {
-        font-size: 1.05rem;
-        margin-right: .5rem;
-    }
-
-    .transaction-pill__merchant {
-        font-size: 0.75rem;
-        font-style: italic;
-    }
+    
 }

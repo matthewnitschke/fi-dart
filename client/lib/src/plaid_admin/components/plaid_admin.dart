@@ -29,44 +29,38 @@ UiFactory<PlaidAdminProps> PlaidAdmin = uiFunction(
     });
 
     return (Dom.div()
-      ..style = { 'textAlign': 'center' }
+      ..style = { 'maxWidth': '50rem', 'margin': 'auto' }
     )(
       Dom.h1()('Accounts'),
       Dom.div()('Plaid Env: "${env.value}"'),
-      (Dom.table()
-        ..className = 'pure-table pure-table-bordered'
-        ..style = {'margin': '1rem auto'}
-      )(
-        Dom.thead()(
-          Dom.tr()(
-            Dom.th()('Email'),
-            Dom.th()('Plaid Access Token'),
-            Dom.th()(),
+
+      accounts.value.map((account) {
+        return (Dom.div()
+          ..key = account.email
+        )(
+          Dom.h2()(account.email),
+
+          (Dom.div()
+            ..style = {'paddingLeft': '1rem', 'borderLeft': 'solid 4px lightblue'}
+          )(
+            Dom.h3()('Access Token'),
+            (Dom.input()
+              ..style = { 'width': '30rem' }
+              ..defaultValue = account.plaidAccessToken
+              ..onBlur = ((event) {
+                fetch('/plaid-admin/set-user-access-token', body: {
+                  'email': account.email,
+                  'plaidAccessToken': event.target.value.toString()
+                });
+              })
+            )(),
+
+            (TestConnectionButton()..email = account.email)(),
+
+            (SyncTransactionsInput()..email = account.email)(),
           )
-        ),
-        Dom.tbody()(
-          accounts.value.map((account) {
-            return (Dom.tr()
-              ..key = account.email
-            )(
-              Dom.td()(account.email),
-              Dom.td()(
-                (Dom.input()
-                  ..style = { 'width': '30rem' }
-                  ..defaultValue = account.plaidAccessToken
-                  ..onBlur = ((event) {
-                    fetch('/plaid-admin/set-user-access-token', body: {
-                      'email': account.email,
-                      'plaidAccessToken': event.target.value.toString()
-                    });
-                  })
-                )()
-              ),
-              Dom.td()((TestConnectionButton()..email = account.email)()),
-            );
-          })
-        )
-      ),
+        );
+      }),
     );
   },
   _$PlaidAdminConfig, // ignore: undefined_identifier
@@ -108,12 +102,54 @@ UiFactory<TestConnectionButtonProps> TestConnectionButton = uiFunction(
 );
 
 
-mixin PlaidLinkButtonProps on UiProps {}
 
-UiFactory<PlaidLinkButtonProps> PlaidLinkButton = uiFunction(
+mixin SyncTransactionsInputProps on UiProps {
+  String email;
+}
+
+UiFactory<SyncTransactionsInputProps> SyncTransactionsInput = uiFunction(
   (props) {
-    
-    
+    final from = useState("");
+    final to = useState("");
+
+    final isSuccess = useState<bool>(null);
+
+    return Dom.div()(
+      Dom.h3()('Sync Transactions'),
+      (Dom.input()
+        ..placeholder = 'from (yyyy-mm-dd)'
+        ..value = from.value
+        ..onChange = ((e) => from.set(e.target.value as String))
+      )(),
+      (Dom.input()
+        ..placeholder = 'to (yyyy-mm-dd)'
+        ..value = to.value
+        ..onChange = ((e) => to.set(e.target.value as String))
+      )(),
+
+      (Dom.button()
+        ..onClick = ((_) {
+          fetch(
+            '/plaid-admin/syncTransactions', 
+            body: {
+              'email': props.email,
+              'from': from.value,
+              'to': to.value,
+            }
+          ).then((resp) {
+            isSuccess.set(resp.statusCode < 300);
+
+            if (resp.statusCode >= 300) {
+              print('-------- Plaid SyncTransactions Failure --------');
+              final encoder = new JsonEncoder.withIndent('  ');
+              print(encoder.convert(json.decode(resp.body)));
+            }
+          });
+        })
+      )(
+        isSuccess.value == null ? 'Sync Transactions' : isSuccess.value ? 'Success' : 'Failure'
+      )
+    );
   },
-  _$PlaidLinkButtonConfig, // ignore: undefined_identifier
+  _$SyncTransactionsInputConfig, // ignore: undefined_identifier
 );

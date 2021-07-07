@@ -30,10 +30,10 @@ UiFactory<BucketValueEditorProps> BucketValueEditor = uiFunction(
             }
           })
           ..options = {
-            'income': 'Income',
-            'static': 'Static',
-            'table': 'Table',
-            'extra': 'Extra'
+            'income': SelectOption('Income'),
+            'static': SelectOption('Static'),
+            'table': SelectOption('Table'),
+            'extra': SelectOption('Extra')
           }
           ..selectedOption = props.value.name
           ..style = {'marginBottom': '.5rem'}

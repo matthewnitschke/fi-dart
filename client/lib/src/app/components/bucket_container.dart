@@ -49,7 +49,7 @@ UiFactory<BucketContainerProps> BucketContainer = uiFunction(
       ..className = 'bucket-container'
       ..label = bucket.label
       ..onLabelChange = ((newLabel) => dispatch(SetItemLabelAction(props.itemId, newLabel)))
-      ..headerContent = (() => Dom.div()('\$$bucketAmount'))
+      ..headerContent = (() => Dom.div()('\$${bucketAmount.toStringAsFixed(0)}'))
       ..onLabelFocus = ((_) => dispatch(SelectItemAction(props.itemId)))
       ..rightContent = (() => (DetailsHandle()
         ..onClick = ((_) => dispatch(SelectItemAction(props.itemId)))

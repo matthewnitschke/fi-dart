@@ -54,13 +54,48 @@ $padding: 0.5rem 0.6rem;
       display: flex;
       align-items: center;
 
-      &:hover {
+      &:hover:not(.disabled) {
         background-color: darken($background, 20%);
       }
 
       &.selected:not(:hover) {
         background-color: darken($background, 10%);
       }
+
+      &.disabled {
+        font-weight: bold;
+        cursor: default;
+      }
     }
   }
+}
+
+
+.form-button {
+  cursor: pointer;
+  padding: 0.5rem 0.6rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: .92rem;
+  padding: 0.5rem 1rem;
+  border: solid 2px var(--green);
+  color: var(--green);
+  background-color: #FFF;
+}
+
+.form-button[disabled] {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.form-button__primary {
+  background-color: var(--green);
+  color: #FFF;
+}
+
+.form-button__primary:hover, .form-button:hover {
+  background-color: #5d985f;
+  border-color: #5d985f;
+  color: #FFF;
 }

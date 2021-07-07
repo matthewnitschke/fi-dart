@@ -3,6 +3,7 @@ import 'package:fi/src/app/components/details_panel/bucket_details_panel.dart';
 import 'package:fi/src/app/components/bucket_group_container.dart';
 import 'package:fi/src/app/components/month_selector.dart';
 import 'package:fi/src/app/components/root_new_button.dart';
+import 'package:fi/src/app/components/transactions_panel/ignore_transaction_dropzone.dart';
 import 'package:fi/src/app/components/transactions_panel/transactions_panel.dart';
 import 'package:fi/src/app/components/utils/sortable_card.dart';
 import 'package:fi/src/app/models/bucket_group.sg.dart';
@@ -34,6 +35,7 @@ UiFactory<AppProps> App = uiFunction(
     return (Dom.div()
       ..className = 'main-content'
     )(
+      IgnoreTransactionDropzone()(),
       (Dom.div()
         ..className = 'header'
       )(MonthSelector()()),

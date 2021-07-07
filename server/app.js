@@ -14,7 +14,6 @@ const availableRoutes = ['/', '/plaid-admin'];
 
 (async () => {
   await require('./db')(); // ensure db is initialized
-
   
   app.use(
     session({
@@ -25,14 +24,15 @@ const availableRoutes = ['/', '/plaid-admin'];
   
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
-  
+
+  // app.use('/login', express.static(path.join(__dirname, '../client/build/web')))
   app.use('/login', require('./controllers/login'));
-    
+  app.use(authentication);
+  
   availableRoutes.forEach((route) => {
     app.use(route, express.static(path.join(__dirname, '../client/build/web')))
   })
   
-  app.use(authentication);
   app.use('/budget', require('./controllers/api/budget'));
   app.use('/transactions', require('./controllers/api/transactions'));
   app.use('/plaid', require('./controllers/api/plaid'));

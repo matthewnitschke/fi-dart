@@ -13,3 +13,9 @@ class AddBorrowAction {
     this.amount,
   ) : borrowId = newUuid();
 }
+
+class DeleteBorrowAction {
+  final String borrowId;
+
+  DeleteBorrowAction(this.borrowId);
+}

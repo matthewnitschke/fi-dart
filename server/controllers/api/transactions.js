@@ -6,7 +6,6 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   const { from, to } = req.query;
 
-  console.log(from, to, req.session.accountId)
   let transactions = await Transaction.find({
     fiAccountId: req.session.accountId,
     date: { $gte: new Date(from), $lte: new Date(to) },

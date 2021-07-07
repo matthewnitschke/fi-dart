@@ -21,6 +21,8 @@ class _$TransactionSerializer implements StructuredSerializer<Transaction> {
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
       'date',
       serializers.serialize(object.date,
           specifiedType: const FullType(DateTime)),
@@ -53,6 +55,10 @@ class _$TransactionSerializer implements StructuredSerializer<Transaction> {
           result.merchant = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'date':
           result.date = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime;
@@ -70,14 +76,20 @@ class _$Transaction extends Transaction {
   @override
   final String merchant;
   @override
+  final String name;
+  @override
   final DateTime date;
 
   factory _$Transaction([void Function(TransactionBuilder) updates]) =>
       (new TransactionBuilder()..update(updates)).build();
 
-  _$Transaction._({this.amount, this.merchant, this.date}) : super._() {
+  _$Transaction._({this.amount, this.merchant, this.name, this.date})
+      : super._() {
     if (amount == null) {
       throw new BuiltValueNullFieldError('Transaction', 'amount');
+    }
+    if (name == null) {
+      throw new BuiltValueNullFieldError('Transaction', 'name');
     }
     if (date == null) {
       throw new BuiltValueNullFieldError('Transaction', 'date');
@@ -97,13 +109,15 @@ class _$Transaction extends Transaction {
     return other is Transaction &&
         amount == other.amount &&
         merchant == other.merchant &&
+        name == other.name &&
         date == other.date;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, amount.hashCode), merchant.hashCode), date.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, amount.hashCode), merchant.hashCode), name.hashCode),
+        date.hashCode));
   }
 
   @override
@@ -111,6 +125,7 @@ class _$Transaction extends Transaction {
     return (newBuiltValueToStringHelper('Transaction')
           ..add('amount', amount)
           ..add('merchant', merchant)
+          ..add('name', name)
           ..add('date', date))
         .toString();
   }
@@ -127,6 +142,10 @@ class TransactionBuilder implements Builder<Transaction, TransactionBuilder> {
   String get merchant => _$this._merchant;
   set merchant(String merchant) => _$this._merchant = merchant;
 
+  String _name;
+  String get name => _$this._name;
+  set name(String name) => _$this._name = name;
+
   DateTime _date;
   DateTime get date => _$this._date;
   set date(DateTime date) => _$this._date = date;
@@ -137,6 +156,7 @@ class TransactionBuilder implements Builder<Transaction, TransactionBuilder> {
     if (_$v != null) {
       _amount = _$v.amount;
       _merchant = _$v.merchant;
+      _name = _$v.name;
       _date = _$v.date;
       _$v = null;
     }
@@ -159,7 +179,8 @@ class TransactionBuilder implements Builder<Transaction, TransactionBuilder> {
   @override
   _$Transaction build() {
     final _$result = _$v ??
-        new _$Transaction._(amount: amount, merchant: merchant, date: date);
+        new _$Transaction._(
+            amount: amount, merchant: merchant, name: name, date: date);
     replace(_$result);
     return _$result;
   }

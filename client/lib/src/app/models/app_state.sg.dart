@@ -11,13 +11,21 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   DateTime get selectedMonth;
 
   @nullable
+  @BuiltValueField(serialize: false)
+  bool get isDraggingTransaction;
+
+  @nullable
   String get selectedItemId;
 
   BuiltMap<String, Item> get items;
   
   BuiltList<String> get rootItemIds;
 
+  @nullable
+  @BuiltValueField(serialize: false)
   BuiltMap<String, Transaction> get transactions;
+
+  BuiltSet<String> get ignoredTransactions;
 
   BuiltMap<String, Borrow> get borrows;
 

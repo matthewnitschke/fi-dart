@@ -5,11 +5,11 @@ const path = require('path');
 const Account = require('../models/Account');
 
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../auth-client/index.html'));
+  res.sendFile(path.join(__dirname, '../../client/login-client/index.html'));
 });
-router.get('/styles.css', (req, res) =>
-  res.sendFile(path.join(__dirname, '../../auth-client/styles.css'))
-);
+router.get('/styles.css', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../client/login-client/styles.css'));
+});
 
 router.post('/authenticate', async (req, res) => {
   console.log('authenticate');

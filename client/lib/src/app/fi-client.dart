@@ -40,7 +40,8 @@ class FiClient {
             encodedTransaction['_id'] as String,
             Transaction((b) => b
               ..amount = (encodedTransaction['amount'] as double) * -1
-              ..merchant = encodedTransaction['merchant'] as String
+              ..merchant = encodedTransaction['merchantName'] ?? encodedTransaction['name'] as String
+              ..name = encodedTransaction['name']
               ..date = DateTime.parse(encodedTransaction['date'] as String)
             ),
           );

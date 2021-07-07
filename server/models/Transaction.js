@@ -8,7 +8,8 @@ const TransactionSchema = new mongoose.Schema({
   date: { type: Date, required: true },
   amount: { type: Number, required: true },
   
-  merchant: String,
+  name: String,
+  merchantName: String,
   isPending: Boolean,
 
   raw: Object

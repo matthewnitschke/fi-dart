@@ -5,7 +5,9 @@ import 'package:over_react/over_react.dart';
 
 Ref useDraggable({
   String handle,
-  AvatarHandler avatarHandler
+  AvatarHandler avatarHandler,
+  void Function(DraggableEvent) onDragStart,
+  void Function(DraggableEvent) onDragEnd,
 }) {
   final ref = useRef();
 
@@ -16,8 +18,14 @@ Ref useDraggable({
       handle: handle,
     );
 
+    final streams = [
+      if (onDragStart != null) draggable.onDragStart.listen(onDragStart),
+      if (onDragEnd != null) draggable.onDragEnd.listen(onDragEnd),
+    ];
+
     return () {
       draggable.destroy();
+      streams.map((st) => st.cancel());
     };
   }, []);
 

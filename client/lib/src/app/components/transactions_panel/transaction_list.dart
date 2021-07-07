@@ -16,7 +16,9 @@ mixin TransactionListProps on UiProps {
 UiFactory<TransactionListProps> TransactionList = uiFunction(
   (props) {
     final transactions = useAppSelector((state) {
-      return props.transactionIds.map((transactionId) {
+      return props.transactionIds
+        .where((transactionId) => !state.ignoredTransactions.contains(transactionId))
+        .map((transactionId) {
         return MapEntry(transactionId, state.transactions[transactionId]);
       });
     });
@@ -60,6 +62,7 @@ UiFactory<TransactionListProps> TransactionList = uiFunction(
               ..key = entry.key
               ..transactionId = entry.key
               ..merchant = entry.value.merchant
+              ..name = entry.value.name
               ..amount = entry.value.amount
             )();
           })

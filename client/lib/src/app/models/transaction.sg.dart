@@ -9,6 +9,8 @@ abstract class Transaction implements Built<Transaction, TransactionBuilder> {
   @nullable
   String get merchant;
 
+  String get name;
+
   DateTime get date;
 
   static Serializer<Transaction> get serializer => _$transactionSerializer;

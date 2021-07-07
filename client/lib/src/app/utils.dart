@@ -18,20 +18,3 @@ TValue useEqualitySelector<TValue>(TValue Function(AppState) selector) {
     }
   );
 }
-
-extension BuiltMapExtendsions<K, V> on BuiltMap<K, V> {
-  Iterable<R> mapKV<R>(Function(K, V) runner) {
-    return this.keys.map((key) {
-      return runner(key, this[key]);
-    });
-  }
-}
-
-extension MapExtendsions<K, V> on Map<K, V> {
-  Iterable<R> mapKV<R>(Function(K, V) runner) {
-    return this.keys.map((key) {
-      return runner(key, this[key]);
-    });
-  }
-}
-

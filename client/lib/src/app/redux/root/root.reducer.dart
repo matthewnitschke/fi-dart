@@ -13,6 +13,8 @@ class RootReducer {
     TypedReducer<AppState, AddBucketAction>(_onAddBucket),
     TypedReducer<AppState, DeleteItemAction>(_onDeleteItem),
     TypedReducer<AppState, SelectItemAction>(_onSelectItem),
+    TypedReducer<AppState, SetIsDraggingTransactionAction>(_onSetIsDraggingTransaction),
+    TypedReducer<AppState, IgnoreTransactionAction>(_onIgnoreTransaction),
   ]);
 
   AppState _onLoadState(AppState state, LoadStateAction action) {
@@ -78,6 +80,18 @@ class RootReducer {
 
     return state.rebuild((b) => b
       ..selectedItemId = action.itemId
+    );
+  }
+
+  AppState _onSetIsDraggingTransaction(AppState state, SetIsDraggingTransactionAction action) {
+    return state.rebuild((b) => b
+      ..isDraggingTransaction = action.isDragging
+    );
+  }
+
+  AppState _onIgnoreTransaction(AppState state, IgnoreTransactionAction action) {
+    return state.rebuild((b) => b
+      ..ignoredTransactions.add(action.transactionId)
     );
   }
 }

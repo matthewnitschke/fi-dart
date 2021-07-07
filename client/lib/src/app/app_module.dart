@@ -30,30 +30,7 @@ class FiModule {
       },
       initialState: AppState((b) => b
         ..selectedMonth = DateTime.now().toUtc()
-        ..transactions = MapBuilder<String, Transaction>({
-          'a': Transaction((tb) => tb
-            ..date = DateTime.now().toUtc()
-            ..merchant = 'Fellow'
-            ..amount = -299
-          ),
-          'b': Transaction((tb) => tb
-            ..date = DateTime.now().subtract(Duration(days: 2)).toUtc()
-            ..merchant = 'Apple'
-            ..amount = -100
-          ),
-          'c': Transaction((tb) => tb
-            ..date = DateTime.now().subtract(Duration(days: 2)).toUtc()
-            ..merchant = 'Faith'
-            ..amount = 100
-          )
-        })
-        ..borrows = MapBuilder<String, Borrow>({
-          'z': Borrow((bb) => bb
-            ..amount = 13
-            ..fromId = '2f58bb39-e9c9-44ec-aa7e-3435bdb2f417'
-            ..toId = '3041dcd2-a3a7-451a-8ac7-0e9d93766270'
-          )
-        })
+        ..transactions = MapBuilder<String, Transaction>()
       ),
       middleware: [
         settingsSaveMiddleware,
