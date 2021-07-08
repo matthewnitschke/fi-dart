@@ -32,6 +32,8 @@ UiFactory<BucketGroupContainerProps> BucketGroupContainer = uiFunction(
       ..className = 'bucket-group-container'
       ..label = bucketGroup.label
       ..onLabelChange = ((newLabel) => dispatch(SetItemLabelAction(props.itemId, newLabel)))
+      ..onReorderUp = (() => dispatch(ReorderItemAction(props.itemId, -1)))
+      ..onReorderDown = (() => dispatch(ReorderItemAction(props.itemId, 1)))
     )(
       bucketGroup.itemIds.map((childItemId) {
         return (BucketContainer()

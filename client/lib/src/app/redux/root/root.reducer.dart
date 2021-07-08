@@ -2,6 +2,7 @@ import 'package:fi/src/app/models/app_state.sg.dart';
 import 'package:fi/src/app/models/bucket_group.sg.dart';
 import 'package:fi/src/app/redux/items/items.actions.dart';
 import 'package:fi/src/app/redux/root/root.actions.dart';
+import 'package:fi/src/utils/extensions.dart';
 import 'package:redux/redux.dart';
 
 class RootReducer {
@@ -15,6 +16,7 @@ class RootReducer {
     TypedReducer<AppState, SelectItemAction>(_onSelectItem),
     TypedReducer<AppState, SetIsDraggingTransactionAction>(_onSetIsDraggingTransaction),
     TypedReducer<AppState, IgnoreTransactionAction>(_onIgnoreTransaction),
+    TypedReducer<AppState, ReorderItemAction>(_onReorderItem),
   ]);
 
   AppState _onLoadState(AppState state, LoadStateAction action) {
@@ -93,5 +95,21 @@ class RootReducer {
     return state.rebuild((b) => b
       ..ignoredTransactions.add(action.transactionId)
     );
+  }
+
+  AppState _onReorderItem(AppState state, ReorderItemAction action) {
+    if (state.rootItemIds.contains(action.itemId)) {
+
+      final index = state.rootItemIds.indexOf(action.itemId);
+
+      final newRootItemIds = state.rootItemIds.toBuilder();
+      newRootItemIds.reorder(index, action.delta);
+
+      return state.rebuild((b) => b
+        ..rootItemIds = newRootItemIds
+      );
+    }
+
+    return state;
   }
 }

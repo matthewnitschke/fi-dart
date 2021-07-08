@@ -14,21 +14,21 @@ class SortableCardProps extends UiProps with CardProps {}
 UiFactory<SortableCardProps> SortableCard = uiFunction(
   (props) {
 
-    final draggableRef = useDraggable(
-      avatarHandler: CardAvatarHandler(),
-      handle: '.drag-handle'
-    );
+    // final draggableRef = useDraggable(
+    //   avatarHandler: CardAvatarHandler(),
+    //   handle: '.drag-handle'
+    // );
 
-    final dropzoneRef = useDropzone(
-      overClass: 'hide'
-    );
+    // final dropzoneRef = useDropzone(
+    //   overClass: 'hide'
+    // );
 
     return (Card()
       ..addProps(props)
-      ..ref = (v) {
-        draggableRef.current = v;
-        dropzoneRef.current = v;
-      }
+      // ..ref = (v) {
+      //   draggableRef.current = v;
+      //   dropzoneRef.current = v;
+      // }
     )(props.children);
   },
   _$SortableCardConfig, // ignore: undefined_identifier

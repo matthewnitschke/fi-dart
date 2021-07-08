@@ -4,6 +4,7 @@ import 'package:fi/src/app/models/bucket_group.sg.dart';
 import 'package:fi/src/app/models/bucket_value.sg.dart';
 import 'package:fi/src/app/models/item.sg.dart';
 import 'package:fi/src/app/redux/items/items.actions.dart';
+import 'package:fi/src/utils/extensions.dart';
 import 'package:redux/redux.dart';
 
 class ItemsReducer {
@@ -17,6 +18,7 @@ class ItemsReducer {
     TypedReducer<BuiltMap<String, Item>, SetBucketValueAction>(_onSetBucketValue),
     TypedReducer<BuiltMap<String, Item>, AllocateTransactionAction>(_onAllocateTransaction),
     TypedReducer<BuiltMap<String, Item>, UnallocateTransactionAction>(_onUnallocateTransaction),
+    TypedReducer<BuiltMap<String, Item>, ReorderItemAction>(_onReorderItem),
   ]);
 
   BuiltMap<String, Item> _onAddBucket(BuiltMap<String, Item> state, AddBucketAction action) {
@@ -90,5 +92,30 @@ class ItemsReducer {
     });
 
     return stateBuilder.build();
+  }
+
+  BuiltMap<String, Item> _onReorderItem(BuiltMap<String, Item> state, ReorderItemAction action) {
+
+    final parentItemId = state.keys.firstWhere((itemId) {
+      final item = state[itemId];
+
+      if (item is BucketGroup) {
+        return item.itemIds.contains(action.itemId);
+      }
+      
+      return false;
+    }, orElse: () => null);
+
+    if (parentItemId == null) return state;
+
+    final parentBucket = state[parentItemId] as BucketGroup;
+    final parentBucketBuilder = parentBucket.toBuilder();
+
+    final index = parentBucket.itemIds.indexOf(action.itemId);
+    parentBucketBuilder.itemIds.reorder(index, action.delta);
+
+    return state.rebuild((b) => b
+      ..[parentItemId] = parentBucketBuilder.build()
+    ); 
   }
 }

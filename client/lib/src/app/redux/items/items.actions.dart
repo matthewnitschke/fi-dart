@@ -56,3 +56,12 @@ class UnallocateTransactionAction {
   final String transactionId;
   UnallocateTransactionAction(this.transactionId);
 }
+
+class ReorderItemAction {
+  final String itemId;
+
+  // 1 for down, -1 for up
+  final int delta;
+
+  ReorderItemAction(this.itemId, this.delta);
+}

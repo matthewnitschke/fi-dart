@@ -31,6 +31,21 @@ extension BuiltMapExtendsions<K, V> on BuiltMap<K, V> {
   }
 }
 
+extension ListBuilderExtensions<T> on ListBuilder<T> {
+  void reorder(int index, int delta) {
+
+    var newIndex = index + delta;
+    if (newIndex < 0) {
+      newIndex = 0;
+    } else if (newIndex >= length - 1) {
+      newIndex = length - 1;
+    }
+
+    final item = removeAt(index);
+    insert(newIndex, item);
+  }
+}
+
 // extension IterableExtensions<V> on Iterable<V> {
 //   Map<K, V> toMap<K>(MapEntry<K, V> Function(V ) runner) {
 //     map(())

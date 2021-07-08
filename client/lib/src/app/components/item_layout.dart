@@ -11,6 +11,9 @@ mixin ItemLayoutProps on UiProps {
 
   void Function(String label) onLabelChange;
   void Function(SyntheticMouseEvent) onLabelFocus;
+
+  void Function() onReorderUp;
+  void Function() onReorderDown;
 }
 
 UiFactory<ItemLayoutProps> ItemLayout = uiForwardRef(
@@ -25,7 +28,10 @@ UiFactory<ItemLayoutProps> ItemLayout = uiForwardRef(
       (Dom.div()
         ..className = 'item-layout__header'
       )(
-        DragHandle()(),
+        (DragHandle()
+          ..onMoveUp = props.onReorderUp
+          ..onMoveDown = props.onReorderDown
+        )(),
 
         (TextInput()
           ..className = 'item-layout__label-input'
