@@ -37,11 +37,7 @@ class FiModule {
       ],
     );
 
-    loadFromLocalStorage(_store);
-
-    // _store.dispatch(AddBucketAction(label: 'Something', itemId: 'a'));
-    // _store.dispatch(SelectItemAction('a'));
-
+    loadFromServer(_store);
   }
 
   Object content() {

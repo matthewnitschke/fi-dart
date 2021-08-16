@@ -25,7 +25,6 @@ const availableRoutes = ['/', '/plaid-admin'];
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
-  // app.use('/login', express.static(path.join(__dirname, '../client/build/web')))
   app.use('/login', require('./controllers/login'));
   app.use(authentication);
   

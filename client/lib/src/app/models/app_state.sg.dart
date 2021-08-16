@@ -8,6 +8,7 @@ import 'package:fi/src/app/models/transaction.sg.dart';
 part 'app_state.sg.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
+  @nullable
   DateTime get selectedMonth;
 
   @nullable

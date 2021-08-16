@@ -39,11 +39,6 @@ UiFactory<AppProps> App = uiFunction(
       (Dom.div()
         ..className = 'header'
       )(MonthSelector()()),
-      // TODO: Fix this weirdness
-      Dom.div()(),
-      Dom.div()(),
-      Dom.div()(),
-      Dom.div()(),
       (Dom.div()
         ..className = 'lhp'
       )(

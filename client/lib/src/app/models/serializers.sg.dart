@@ -25,4 +25,5 @@ part 'serializers.sg.g.dart';
   Transaction,
   Borrow,
 ])
+
 Serializers serializers = (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

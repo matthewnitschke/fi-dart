@@ -31,7 +31,7 @@ UiFactory<TransactionsPanelProps> TransactionsPanel = uiFunction(
       ..className = 'h100'
     )(
       (TransactionList()
-        ..className = 'scroll'
+        ..className = 'card__inner-scroll'
         ..transactionIds = transactions
       )()
     );

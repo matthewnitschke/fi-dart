@@ -26,36 +26,37 @@ body {
 }
 
 .main-content {
-  height:100%;
   display: grid;
-  grid-template-rows: 3rem auto;
+  grid-template-rows: 3rem auto 1rem;
   grid-template-columns: minmax(auto, 12.5%) minmax(auto, 20%) minmax(auto, 35%) minmax(auto, 32.5%);
-
   grid-template-areas:
     ". . header ."
-    ". lhp body rhp";
-
+    ". lhp body rhp"
+    ". . . .";
   column-gap: 15px;
+  height: 100%;
+
+  .header, .lhp, .body, .rhp {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
 
   & > .header {
     grid-area: header;
   }
-
+  
+  & > .lhp {
+    grid-area: lhp;
+  }
+  
   & > .body {
     grid-area: body;
   }
-
+  
   & > .rhp {
     grid-area: rhp;
-  
-    display: flex;
-    flex-direction: column;
-  }
-  
-  & > .lhp {
-    grid-area: "lhp";
-    height: 100%;
-    overflow-y: hidden;
   }
 }
 

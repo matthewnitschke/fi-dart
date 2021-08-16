@@ -18,9 +18,6 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   Iterable<Object> serialize(Serializers serializers, AppState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'selectedMonth',
-      serializers.serialize(object.selectedMonth,
-          specifiedType: const FullType(DateTime)),
       'items',
       serializers.serialize(object.items,
           specifiedType: const FullType(
@@ -38,6 +35,12 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(Borrow)])),
     ];
+    if (object.selectedMonth != null) {
+      result
+        ..add('selectedMonth')
+        ..add(serializers.serialize(object.selectedMonth,
+            specifiedType: const FullType(DateTime)));
+    }
     if (object.selectedItemId != null) {
       result
         ..add('selectedItemId')
@@ -126,9 +129,6 @@ class _$AppState extends AppState {
       this.ignoredTransactions,
       this.borrows})
       : super._() {
-    if (selectedMonth == null) {
-      throw new BuiltValueNullFieldError('AppState', 'selectedMonth');
-    }
     if (items == null) {
       throw new BuiltValueNullFieldError('AppState', 'items');
     }

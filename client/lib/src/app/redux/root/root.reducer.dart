@@ -25,6 +25,7 @@ class RootReducer {
       ..rootItemIds = action.rootItemIds.toBuilder()
       ..borrows = action.borrows.toBuilder()
       ..transactions = action.transactions.toBuilder()
+      ..ignoredTransactions = action.ignoredTransactions.toBuilder()
     );
   }
 

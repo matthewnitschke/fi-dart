@@ -48,7 +48,9 @@ UiFactory<TransactionListProps> TransactionList = uiFunction(
         return (Dom.div()
           ..key = dateStr
           ..style = {
-            'marginBottom': '1.5rem'
+            'marginBottom': '1.5rem',
+            'display': 'flex',
+            'flex-direction': 'column',
           }
         )(
           (Dom.div()

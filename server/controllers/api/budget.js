@@ -4,6 +4,7 @@ const Transaction = require('../../models/Transaction');
 const express = require('express');
 const router = express.Router();
 
+
 router.get('/:year/:month', async (req, res) => {
   const { year, month } = req.params;
   const { accountId } = req.session;
@@ -13,40 +14,12 @@ router.get('/:year/:month', async (req, res) => {
     date: `${year}/${month}`,
   });
 
-  let lastOfMonth = new Date(parseInt(year), parseInt(month) + 1, 0);
-  console.log(
-    `Searching for transactions: between ${year}-${month}-1 and ${year}-${month}-${lastOfMonth.getDate()}`
-  );
-  const transactions = await Transaction.find({
-    fiAccountId: req.session.accountId,
-    date: {
-      $gte: `${year}-${month}-1`,
-      $lte: `${year}-${month}-${lastOfMonth.getDate()}`,
-    },
-  });
-
-  let response = {};
-  if (foundBudget) {
-    response = {
-      ...response,
-      ...foundBudget.storeData,
-    };
+  if (foundBudget == null) {
+    res.status(404).json({ error: 'budget not found' })
+    return
   }
 
-  if (transactions) {
-    response = {
-      ...response,
-      transactions: transactions.reduce(
-        (acc, transaction) => ({
-          ...acc,
-          [transaction._id]: transaction,
-        }),
-        {}
-      ),
-    };
-  }
-
-  res.status(200).json(response);
+  res.status(200).json(JSON.parse(foundBudget.storeData));
 });
 
 router.post('/:year/:month', async (req, res) => {
@@ -64,14 +37,14 @@ router.post('/:year/:month', async (req, res) => {
         _id: foundBudget._id,
       },
       {
-        storeData: req.body,
+        storeData: req.body.serializedStore,
       }
     );
   } else {
     let newBudget = new Budget({
       accountId,
       date: `${year}/${month}`,
-      storeData: req.body,
+      storeData: req.body.serializedStore,
     });
 
     await newBudget.save();

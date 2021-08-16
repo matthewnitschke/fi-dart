@@ -114,6 +114,12 @@ router.post('/syncTransactions', async (req, res) => {
       }))
     );
 
+    await Account.updateOne({
+      _id: req.session.accountId,
+    }, {
+      lastTransactionsSync: new Date(),
+    });
+
   } catch(e) {
     console.error(e)
     return res.status(500).json({

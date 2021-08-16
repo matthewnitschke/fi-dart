@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:html';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:fi/src/app/models/app_state.sg.dart';
+import 'package:fi/src/app/models/serializers.sg.dart';
 import 'package:fi/src/app/models/transaction.sg.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -19,6 +21,26 @@ class FiClient {
     var response = await http.post(_getUrl('/transactions'), body: {'name': 'doodle', 'color': 'blue'});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
+  }
+
+  static Future<void> updateBudget(DateTime budgetMonth, String serializedStore) async {
+    final monthStr = DateFormat.M().format(budgetMonth);
+    final yearStr = DateFormat.y().format(budgetMonth);
+
+    await http.post(_getUrl('/budget/$yearStr/$monthStr'), body: { 'serializedStore': serializedStore });
+  }
+
+  static Future<AppState> getBudget(DateTime budgetMonth) async {
+    final monthStr = DateFormat.M().format(budgetMonth);
+    final yearStr = DateFormat.y().format(budgetMonth);
+
+    final resp = await http.get(_getUrl('/budget/$yearStr/$monthStr'));
+
+    if (resp.body.isEmpty) return null;
+
+    final serializedStore = json.decode(resp.body);
+
+    return serializers.deserializeWith(AppState.serializer, serializedStore);
   }
 
   static Future<BuiltMap<String, Transaction>> getTransactions(

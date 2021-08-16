@@ -8,12 +8,14 @@ class LoadStateAction {
   final BuiltList<String> rootItemIds;
   final BuiltMap<String, Borrow> borrows;
   final BuiltMap<String, Transaction> transactions;
+  final BuiltSet<String> ignoredTransactions;
 
   LoadStateAction({
     this.items,
     this.rootItemIds,
     this.borrows,
     this.transactions,
+    this.ignoredTransactions,
   });
 }
 
