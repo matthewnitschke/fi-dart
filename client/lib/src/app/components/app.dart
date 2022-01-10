@@ -1,15 +1,13 @@
-import 'package:fi/src/app/components/bucket_container.dart';
+import 'package:fi/src/app/components/app_bar.dart';
+import 'package:fi/src/app/components/bucket_list.dart';
 import 'package:fi/src/app/components/details_panel/bucket_details_panel.dart';
-import 'package:fi/src/app/components/bucket_group_container.dart';
 import 'package:fi/src/app/components/month_selector.dart';
-import 'package:fi/src/app/components/root_new_button.dart';
 import 'package:fi/src/app/components/transactions_panel/ignore_transaction_dropzone.dart';
 import 'package:fi/src/app/components/transactions_panel/transactions_panel.dart';
-import 'package:fi/src/app/components/utils/sortable_card.dart';
-import 'package:fi/src/app/models/bucket_group.sg.dart';
+import 'package:fi/src/app/redux/root/root.actions.dart';
 import 'package:fi/src/app/utils.dart';
 import 'package:over_react/over_react.dart';
-import 'package:collection/collection.dart';
+import 'package:over_react/over_react_redux.dart';
 
 part 'app.over_react.g.dart';
 
@@ -17,58 +15,75 @@ mixin AppProps on UiProps {}
 
 UiFactory<AppProps> App = uiFunction(
   (props) {
-    final rootItemIds = useEqualitySelector(
-      (state) => state.rootItemIds
-    );
+    final selectedItemId = useAppSelector((state) => state.selectedItemId);
+    final dispatch = useDispatch();
 
-    final selectedItemId = useAppSelector(
-      (state) => state.selectedItemId
-    );
-
-    final rootItemBucketGroupIds = useAppSelector<List<String>>(
-      (state) => state.rootItemIds
-        .where((itemId) => state.items[itemId] is BucketGroup)
-        .toList(),
-      (a, b) => ListEquality().equals(a, b)
-    );
+    if (selectedItemId != null) {
+      return Dom.div()(
+        (AppBar()
+          ..onBackClick = (() => dispatch(SelectItemAction(null)))
+        )(),
+        (BucketDetailsPanel()..itemId = selectedItemId)()
+      );
+    }
 
     return (Dom.div()
-      ..className = 'main-content'
+      ..className = 'body'
     )(
       IgnoreTransactionDropzone()(),
+      MonthSelector()(),
+      BucketList()(),
+    );
+
+    // return (_DesktopLayout()
+    //   ..selectedItemId = selectedItemId
+    // )();
+  },
+  _$AppConfig, // ignore: undefined_identifier
+);
+
+
+mixin _DesktopLayoutProps on UiProps {
+  String selectedItemId;
+}
+
+UiFactory<_DesktopLayoutProps> _DesktopLayout = uiFunction(
+  (props) {
+    return Fragment()(
+      IgnoreTransactionDropzone()(),
+      (Dom.div()
+        ..className = 'lhp card card__scrollable'
+      )(TransactionsPanel()()),
       (Dom.div()
         ..className = 'header'
       )(MonthSelector()()),
       (Dom.div()
-        ..className = 'lhp'
-      )(
-        TransactionsPanel()()
-      ),
-      (Dom.div()..className = 'body')(
-        rootItemIds.map((itemId) {
-          return (SortableCard()
-            ..key = itemId
-            ..className = 'item-layout__card'
-          )(
-            rootItemBucketGroupIds.contains(itemId) ? 
-              (BucketGroupContainer()
-                ..itemId = itemId
-              )() :
-              (BucketContainer()
-                ..itemId = itemId
-              )()
-          );
-        }),
-        RootNewButton()()
-      ),
+        ..className = 'body'
+      )(BucketList()()),
       (Dom.div()
         ..className = 'rhp'
       )(
-        selectedItemId != null ? (BucketDetailsPanel()
-          ..itemId = selectedItemId
-        )() : null
+        props.selectedItemId != null
+          ? (BucketDetailsPanel()..itemId = props.selectedItemId)()
+          : null
       ),
     );
   },
-  _$AppConfig, // ignore: undefined_identifier
+  _$_DesktopLayoutConfig, // ignore: undefined_identifier
 );
+
+// <div class="app">
+//   <div class="lhp card card__scrollable">
+//     <h2>Transactions</h2>
+//     <div class="card__inner-scroll" data-fill="z">
+//       ss
+//     </div>
+//   </div>
+//   <div class="header">This is a header</div>
+//   <div class="body" data-fill="body"></div>
+//   <div class="rhp card card__scrollable">
+//       <div class="card__inner-scroll" data-fill="two">
+        
+//       </div>
+//   </div>
+// </div>

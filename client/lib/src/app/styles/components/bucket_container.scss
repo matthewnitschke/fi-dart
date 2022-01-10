@@ -1,28 +1,10 @@
-// .bucket-container {
-//     // display: grid;
-//     // grid-template-columns: 14px auto;
-//     // grid-template-rows: auto auto;
+.bucket-container {
+    display: flex;
+    align-items: center;
 
-//     &:hover .drag-handle {
-//         visibility: visible;
-//     }
+    .bucket-container__main-content {
+        flex-grow: 1;
+    }
 
-//     .drag-handle {
-//         align-self: center;
-//         visibility: hidden;
-//         cursor: move;
-//     }
-
-//     .amount-indicator {
-//         grid-column-start: 2;
-//     }
-
-//     // &:not(:last-child) .amount-indicator {
-//     //     margin-bottom: 1rem;
-//     // }
-
-//     .bucket-container__content-line {
-//         display: flex;
-//         align-items: center;
-//     }
-// }
+    
+}

@@ -25,10 +25,16 @@ UiFactory<TransactionsPanelProps> TransactionsPanel = uiFunction(
       unallocatedTransactionsSelector
     );
 
+    // return (TransactionList()
+    //   ..ref = ref
+    //   ..className = 'card__inner-scroll'
+    //   ..transactionIds = transactions
+    // )();
+
     return (Panel()
       ..header = 'Transactions'
       ..ref = ref
-      ..className = 'h100'
+      // ..className = 'h100 card__scrollable'
     )(
       (TransactionList()
         ..className = 'card__inner-scroll'

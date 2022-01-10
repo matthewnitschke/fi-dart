@@ -25,40 +25,51 @@ body {
   background-color: var(--background);
 }
 
-.main-content {
-  display: grid;
-  grid-template-rows: 3rem auto 1rem;
-  grid-template-columns: minmax(auto, 12.5%) minmax(auto, 20%) minmax(auto, 35%) minmax(auto, 32.5%);
-  grid-template-areas:
-    ". . header ."
-    ". lhp body rhp"
-    ". . . .";
-  column-gap: 15px;
+html, body {
+  margin: 0;
   height: 100%;
-
-  .header, .lhp, .body, .rhp {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  & > .header {
-    grid-area: header;
-  }
-  
-  & > .lhp {
-    grid-area: lhp;
-  }
-  
-  & > .body {
-    grid-area: body;
-  }
-  
-  & > .rhp {
-    grid-area: rhp;
-  }
 }
+
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  padding: 0 .5rem;
+}
+
+// #app {
+//   display: grid;
+//   height: 100%;
+//   min-height: 0;
+//   grid-column-gap: .7rem;
+//   grid-row-gap: .7rem;
+//   grid-template-rows: 3rem minmax(0, 1fr) 1rem;
+//   grid-template-columns: minmax(auto, 12.5%) minmax(auto, 20%) minmax(auto, 35%) minmax(auto, 32.5%);
+//   grid-template-areas:
+//     ". . header ."
+//     ". lhp body rhp"
+//     ". . body .";
+  
+//   & > .header {
+//     grid-area: header;
+//   }
+  
+//   & > .lhp {
+//     grid-area: lhp;
+//   }
+  
+//   & > .body {
+//     grid-area: body;
+    
+//     overflow-y: auto; 
+//   }
+  
+//   & > .rhp {
+//     grid-area: rhp;
+//   }
+// }
+
 
 .dnd-over {
   background-color: lightblue;

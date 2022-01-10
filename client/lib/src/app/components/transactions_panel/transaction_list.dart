@@ -6,7 +6,6 @@ import 'package:over_react/over_react.dart';
 
 part 'transaction_list.over_react.g.dart';
 
-
 final dateFormatter = DateFormat.MMMd();
 
 mixin TransactionListProps on UiProps {
@@ -50,7 +49,7 @@ UiFactory<TransactionListProps> TransactionList = uiFunction(
           ..style = {
             'marginBottom': '1.5rem',
             'display': 'flex',
-            'flex-direction': 'column',
+            'flexDirection': 'column',
           }
         )(
           (Dom.div()

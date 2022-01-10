@@ -8,12 +8,12 @@ mixin DetailsHandleProps on UiProps {
 
 UiFactory<DetailsHandleProps> DetailsHandle = uiFunction(
   (props) {
-
     return (Dom.div()
       ..className = (ClassNameBuilder()
           ..add('details-handle')
           ..add('details-handle__selected', props.isSelected)
         ).toClassName()
+      ..style = props.style
       ..onClick = props.onClick
     )(
       (Dom.i()

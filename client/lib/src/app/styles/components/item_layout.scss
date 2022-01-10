@@ -1,6 +1,6 @@
 
 .item-layout__card {
-    padding: 1rem 1.7rem;
+    margin-bottom: .7rem;
 }
 
 .item-layout {
@@ -10,12 +10,6 @@
     .item-layout__header {
         display: flex;
         align-items: center;
-
-        &:hover {
-            .details-handle, .drag-handle {
-                opacity: 1;
-            }
-        }
     }
 
     .drag-handle {
@@ -34,23 +28,6 @@
 
     .item-layout__label-input {
         width: 100%;
-    }
-
-    .details-handle {
-        $right: 18px;
-        right: -$right;
-        padding-left: $right;
-        color: var(--blue);
-        position: absolute;
-        font-size: 0.8rem;
-        opacity: 0.3;
-        cursor: pointer;
-
-
-        &:hover, &.details-handle__selected {
-            opacity: 1;
-            color: var(--blue-dark);
-        }
     }
 
     .item-layout__content {

@@ -1,6 +1,5 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:fi/src/app/components/app.dart';
-import 'package:fi/src/app/models/borrow.sg.dart';
 import 'package:fi/src/app/redux/borrows/borrows.reducer.dart';
 import 'package:fi/src/app/redux/items/items.reducer.dart';
 import 'package:fi/src/app/redux/root/root.reducer.dart';
@@ -15,7 +14,6 @@ class FiModule {
   Store<AppState> _store;
 
   FiModule() {
-
     final rootReducer = RootReducer().reducer;
     final itemsReducer = ItemsReducer().reducer;
     final borrowsReducer = BorrowsReducer().reducer;
@@ -25,13 +23,11 @@ class FiModule {
         final rootState = rootReducer(state, action);
         return rootState.rebuild((b) => b
           ..items = itemsReducer(rootState.items, action).toBuilder()
-          ..borrows = borrowsReducer(rootState.borrows, action).toBuilder()
-        );
+          ..borrows = borrowsReducer(rootState.borrows, action).toBuilder());
       },
       initialState: AppState((b) => b
         ..selectedMonth = DateTime.now().toUtc()
-        ..transactions = MapBuilder<String, Transaction>()
-      ),
+        ..transactions = MapBuilder<String, Transaction>()),
       middleware: [
         settingsSaveMiddleware,
       ],
@@ -41,8 +37,6 @@ class FiModule {
   }
 
   Object content() {
-    return (ReduxProvider()
-      ..store = _store
-    )(App()()); 
+    return (ReduxProvider()..store = _store)(App()());
   }
 }
